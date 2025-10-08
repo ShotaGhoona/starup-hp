@@ -7,15 +7,12 @@ import Footer from '@/components/layout/Footer'
 export default function Home() {
   return (
     <div className="relative">
-      <HeroSection />
-      
-      {/* NetworkSection */}
-      <NetworkSection />
-      
+      <HeroSection />      
       {/* HeroSection以降の背景 */}
       <div className="relative">
         <Background />
         <VisionSection />
+        <NetworkSection />
       </div>
       
       <Footer />
