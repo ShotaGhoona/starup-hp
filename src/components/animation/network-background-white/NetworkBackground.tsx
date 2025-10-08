@@ -776,7 +776,6 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
 
     // Scene setup
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x333333, 0.0015)
     sceneRef.current = scene
 
     const camera = new THREE.PerspectiveCamera(60, mountRef.current.offsetWidth / mountRef.current.offsetHeight, 0.1, 1200)
@@ -786,7 +785,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" })
     renderer.setSize(mountRef.current.offsetWidth, mountRef.current.offsetHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x333333, 0)
+    renderer.setClearColor(0x000000, 0)
     renderer.outputColorSpace = THREE.SRGBColorSpace
     rendererRef.current = renderer
     mountRef.current.appendChild(renderer.domElement)
@@ -824,11 +823,6 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
       const composer = new EffectComposer(renderer)
       composer.addPass(new RenderPass(scene, camera))
 
-      const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.68)
-      composer.addPass(bloomPass)
-
-      const filmPass = new FilmPass(0.35, false)
-      composer.addPass(filmPass)
 
       composer.addPass(new OutputPass())
       composerRef.current = composer

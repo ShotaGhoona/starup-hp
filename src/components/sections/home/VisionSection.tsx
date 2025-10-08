@@ -1,6 +1,6 @@
 'use client'
 
-import { DiamondCanvas } from '@/components/animation/vision-animation'
+import { FlowVision } from '@/components/animation/vision-animation/FlowVision'
 
 interface VisionSectionProps {
   className?: string
@@ -72,25 +72,39 @@ export default function VisionSection({ className = '' }: VisionSectionProps) {
       </div>
 
       {/* 3層図解 */}
-      <div className="">
-        <div className="max-w-7xl mx-auto px-6">
-          {visionData.map((item, index) => (
-            <div key={item.id} className="py-8  ml-120">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                {item.title}
-              </h3>
-              <div className="space-y-3">
-                {item.description.map((line, lineIndex) => (
-                  <p 
-                    key={lineIndex}
-                    className="text-gray-700 text-base leading-relaxed"
-                    >
-                      {line}
-                    </p>
-                  ))}
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="relative">
+          {/* 左側: エンハンスドフローアニメーション */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[300px]">
+            
+              <FlowVision 
+                className="mb-8"
+              />
+            
+          </div>
+
+          {/* 右側: テキストコンテンツ */}
+          <div className="flex flex-col items-end">
+            <div>
+              {visionData.map((item, index) => (
+                <div key={item.id} className="py-8">
+                  <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                    {item.title}
+                  </h3>
+                  <div className="space-y-3">
+                    {item.description.map((line, lineIndex) => (
+                      <p 
+                      key={lineIndex}
+                      className="text-gray-700 text-base leading-relaxed"
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
