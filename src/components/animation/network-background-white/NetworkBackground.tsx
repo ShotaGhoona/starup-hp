@@ -7,12 +7,12 @@ interface NetworkBackgroundProps {
   className?: string
 }
 
-// Color palettes - Cool colors (blues, cyans, teals)
+// Color palettes - Dark colors for light background
 const colorPalettes = [
-  [new THREE.Color(0x0EA5E9), new THREE.Color(0x0284C7), new THREE.Color(0x0369A1), new THREE.Color(0x075985), new THREE.Color(0x38BDF8)],
-  [new THREE.Color(0x06B6D4), new THREE.Color(0x0891B2), new THREE.Color(0x0E7490), new THREE.Color(0x155E75), new THREE.Color(0x22D3EE)],
-  [new THREE.Color(0x14B8A6), new THREE.Color(0x0D9488), new THREE.Color(0x0F766E), new THREE.Color(0x134E4A), new THREE.Color(0x5EEAD4)],
-  [new THREE.Color(0x3B82F6), new THREE.Color(0x2563EB), new THREE.Color(0x1D4ED8), new THREE.Color(0x1E40AF), new THREE.Color(0x60A5FA)]
+  [new THREE.Color(0x1e40af), new THREE.Color(0x1e3a8a), new THREE.Color(0x312e81), new THREE.Color(0x3730a3), new THREE.Color(0x4338ca)],
+  [new THREE.Color(0x0f766e), new THREE.Color(0x134e4a), new THREE.Color(0x164e63), new THREE.Color(0x0c4a6e), new THREE.Color(0x075985)],
+  [new THREE.Color(0x7c2d12), new THREE.Color(0x9a3412), new THREE.Color(0xa16207), new THREE.Color(0x92400e), new THREE.Color(0x78350f)],
+  [new THREE.Color(0x4c1d95), new THREE.Color(0x581c87), new THREE.Color(0x6b21a8), new THREE.Color(0x7c3aed), new THREE.Color(0x8b5cf6)]
 ]
 
 interface Config {
@@ -163,7 +163,7 @@ const nodeShader = {
       vec3 finalColor = baseColor;
 
       if (vPulseIntensity > 0.0) {
-          vec3 pulseColor = mix(vec3(1.0), uPulseColors[0], 0.3);
+          vec3 pulseColor = mix(vec3(0.0), uPulseColors[0], 0.7);
           finalColor = mix(baseColor, pulseColor, vPulseIntensity);
           finalColor *= (1.0 + vPulseIntensity * 0.7);
       }
@@ -259,7 +259,7 @@ const connectionShader = {
       vec3 finalColor = baseColor;
 
       if (vPulseIntensity > 0.0) {
-          vec3 pulseColor = mix(vec3(1.0), uPulseColors[0], 0.3);
+          vec3 pulseColor = mix(vec3(0.0), uPulseColors[0], 0.7);
           finalColor = mix(baseColor, pulseColor, vPulseIntensity);
           flowIntensity += vPulseIntensity * 0.5;
       }
