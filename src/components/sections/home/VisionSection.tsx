@@ -1,6 +1,7 @@
 'use client'
 
 import { SphereScan } from '@/components/animation/sphere-scan'
+import Background from '@/components/layout/Background'
 
 interface VisionSectionProps {
   className?: string
@@ -51,6 +52,7 @@ const visionData: VisionItem[] = [
 export default function VisionSection({ className = '' }: VisionSectionProps) {
   return (
     <section className={`py-40 ${className}`}>
+      <Background />
       <div className="max-w-4xl mx-auto text-center">
         {/* タイトル */}
         <div className="mb-12">
