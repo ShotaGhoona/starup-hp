@@ -1,7 +1,31 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 const Header = () => {
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [lastScrollY])
   const navItems = [
     { label: '新着情報', href: '/news' },
     { label: '会社概要', href: '/company' },
@@ -12,8 +36,10 @@ const Header = () => {
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center">
-      <div className="flex items-center justify-between mt-[54.79px] w-7xl h-[100px] px-10 bg-white/80 rounded-[50px] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.1)]">
+    <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-transform duration-300 ${
+      isVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}>
+      <div className="flex items-center justify-between mt-[54.79px] w-7xl h-[100px] px-10 bg-white/80 backdrop-blur-sm rounded-[50px] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.1)]">
         {/* ロゴ */}
         <Link href="/" className="flex-shrink-0">
           <Image
