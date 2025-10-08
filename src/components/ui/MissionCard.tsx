@@ -10,7 +10,7 @@ export default function MissionCard({ className = '' }: MissionCardProps) {
   return (
     <div 
       className={`
-        bg-white shadow-lg p-20
+        bg-[#ffffff95] shadow-lg p-20
         flex flex-col justify-between
         ${className}
       `}
@@ -31,7 +31,7 @@ export default function MissionCard({ className = '' }: MissionCardProps) {
             私たちは知の集団としてAIで社会課題を解決します
           </p>
           
-          <div className="space-y-4 text-sm text-[#666666] leading-[1.8]">
+          <div className="space-y-4 text-sm text-[#333333] leading-[1.8]">
             <p>
               東大・京大をはじめとする一流大学出身者が集結。
             </p>

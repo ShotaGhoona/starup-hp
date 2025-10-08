@@ -1,6 +1,7 @@
 import HeroSection from '@/components/sections/home/HeroSection'
 import VisionSection from '@/components/sections/home/VisionSection'
 import Background from '@/components/layout/Background'
+import Footer from '@/components/layout/Footer'
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
         <Background />
         <VisionSection />
       </div>
+      
+      <Footer />
     </div>
   );
 }
