@@ -776,7 +776,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
 
     // Scene setup
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x000000, 0.0015)
+    scene.fog = new THREE.FogExp2(0x333333, 0.0015)
     sceneRef.current = scene
 
     const camera = new THREE.PerspectiveCamera(60, mountRef.current.offsetWidth / mountRef.current.offsetHeight, 0.1, 1200)
@@ -786,7 +786,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" })
     renderer.setSize(mountRef.current.offsetWidth, mountRef.current.offsetHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x000000, 0)
+    renderer.setClearColor(0x333333, 0)
     renderer.outputColorSpace = THREE.SRGBColorSpace
     rendererRef.current = renderer
     mountRef.current.appendChild(renderer.domElement)

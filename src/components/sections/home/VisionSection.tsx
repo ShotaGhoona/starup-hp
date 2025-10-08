@@ -74,18 +74,16 @@ export default function VisionSection({ className = '' }: VisionSectionProps) {
       {/* 3層図解 */}
       <div className="">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="relative">
-            {/* テキストコンテンツを通常フローで配置 */}
-            {visionData.map((item, index) => (
-              <div key={item.id} className="py-8  ml-120">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                  {item.title}
-                </h3>
-                <div className="space-y-3">
-                  {item.description.map((line, lineIndex) => (
-                    <p 
-                      key={lineIndex}
-                      className="text-gray-700 text-base leading-relaxed"
+          {visionData.map((item, index) => (
+            <div key={item.id} className="py-8  ml-120">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                {item.title}
+              </h3>
+              <div className="space-y-3">
+                {item.description.map((line, lineIndex) => (
+                  <p 
+                    key={lineIndex}
+                    className="text-gray-700 text-base leading-relaxed"
                     >
                       {line}
                     </p>
@@ -93,20 +91,6 @@ export default function VisionSection({ className = '' }: VisionSectionProps) {
                 </div>
               </div>
             ))}
-
-            {/* 右側: 3D立方体を絶対配置 */}
-            <div className="absolute left-0 top-0 flex flex-col justify-around items-center">
-              {visionData.map((item) => (
-                <div key={item.id} className="flex justify-center">
-                  <DiamondCanvas 
-                    color={item.color}
-                    intensity={item.intensity}
-                    className="transform hover:scale-105 transition-transform -translate-y-2/3 duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>

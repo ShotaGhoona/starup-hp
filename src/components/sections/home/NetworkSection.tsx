@@ -1,6 +1,6 @@
 'use client'
 
-import { NetworkBackground } from '@/components/animation/network-background'
+import NetworkBackground from '@/components/animation/network-background/NetworkBackground'
 
 interface NetworkSectionProps {
   className?: string
