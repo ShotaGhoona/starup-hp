@@ -97,13 +97,13 @@ export default function SpaceBackground({ className = '' }: SpaceBackgroundProps
 
   return (
     <div 
-      className="fixed -z-10 overflow-visible"
+      className="absolute -z-10 overflow-visible"
       style={{
         top: '-10vh',
-        left: '75%',
+        left: '80%',
         transform: 'translateX(-50%)',
-        width: '150vw',
-        height: 'calc(150vw / 1.74)', // アスペクト比計算
+        width: '140vw',
+        height: 'calc(140vw / 1.74)', // アスペクト比計算
       }}
     >
         <div 

@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center">
-      <div className="flex items-center justify-between mt-[54.79px] w-[1200px] h-[100px] px-10 bg-white/80 rounded-[50px] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.1)]">
+      <div className="flex items-center justify-between mt-[54.79px] w-7xl h-[100px] px-10 bg-white/80 rounded-[50px] shadow-[4px_4px_20px_0px_rgba(0,0,0,0.1)]">
         {/* ロゴ */}
         <Link href="/" className="flex-shrink-0">
           <Image
