@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronRight } from 'lucide-react'
+import { GlassCard } from '@/components/animation/glass-card'
 
 interface PurposeCardProps {
   className?: string
@@ -8,13 +9,7 @@ interface PurposeCardProps {
 
 export default function PurposeCard({ className = '' }: PurposeCardProps) {
   return (
-    <div 
-      className={`
-        bg-[#ffffff95] shadow-lg p-20
-        flex flex-col justify-between
-        ${className}
-      `}
-    >
+    <GlassCard className={className}>
       {/* ヘッダー */}
       <div className="mb-8">
         <div className="mb-6">
@@ -66,6 +61,6 @@ export default function PurposeCard({ className = '' }: PurposeCardProps) {
         <span>会社概要をみる</span>
         <ChevronRight className="w-4 h-4" />
       </button>
-    </div>
+    </GlassCard>
   )
 }
