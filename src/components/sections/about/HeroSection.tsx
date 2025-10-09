@@ -10,8 +10,8 @@ const HeroSection = () => {
         <SpaceBackground />
         
         {/* パーティクルテキストを左寄りに配置 */}
-        <div className="absolute inset-0 flex items-center justify-start -translate-x-1/6">
-          <div className="w-full h-[60rem]">
+        <div className="absolute inset-0 flex items-center justify-start">
+          <div className="w-full h-[60rem]" style={{ marginLeft: '-30%' }}>
             <InteractiveParticleText className="w-full h-full" text={"About Us\nOur Vision"} />
           </div>
         </div>

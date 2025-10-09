@@ -154,6 +154,8 @@ export default function InteractiveParticleText({ className = '', text }: Intera
       particles: THREE.Points | null = null
       geometryCopy: THREE.BufferGeometry | null = null
       currenPosition: THREE.Vector3 | null = null
+      markers: THREE.Mesh[] = []
+      originalMarkerPositions: THREE.Vector3[] = []
 
       data = {
         text: '',
@@ -199,8 +201,9 @@ export default function InteractiveParticleText({ className = '', text }: Intera
       }
 
       onMouseDown(event: MouseEvent) {
-        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+        const rect = this.renderer.domElement.getBoundingClientRect()
+        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
 
         const vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5)
         vector.unproject(this.camera)
@@ -218,8 +221,9 @@ export default function InteractiveParticleText({ className = '', text }: Intera
       }
 
       onMouseMove(event: MouseEvent) { 
-        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+        const rect = this.renderer.domElement.getBoundingClientRect()
+        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
       }
 
       render() { 
@@ -273,7 +277,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
               coulors.needsUpdate = true
 
               if ((px > (initX + 70)) || (px < (initX - 70)) || (py > (initY + 70)) || (py < (initY - 70))) {
-                this.colorChange.setHSL(0.15, 1.0, 0.5)
+                this.colorChange.setHSL(0.6, 1.0, 0.5)
                 coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b)
                 coulors.needsUpdate = true
               }
@@ -284,7 +288,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
                   px -= 0.03 * Math.cos(t)
                   py -= 0.03 * Math.sin(t)
 
-                  this.colorChange.setHSL(0.15, 1.0, 0.5)
+                  this.colorChange.setHSL(0.6, 1.0, 0.5)
                   coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b)
                   coulors.needsUpdate = true
 
@@ -303,7 +307,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
                 }
 
                 if ((px > (initX + 10)) || (px < (initX - 10)) || (py > (initY + 10)) || (py < (initY - 10))) {
-                  this.colorChange.setHSL(0.15, 1.0, 0.5)
+                  this.colorChange.setHSL(0.6, 1.0, 0.5)
                   coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b)
                   coulors.needsUpdate = true
 
@@ -320,6 +324,80 @@ export default function InteractiveParticleText({ className = '', text }: Intera
             pos.setXYZ(i, px, py, pz)
             pos.needsUpdate = true
           }
+        }
+
+        // マーカーのインタラクション処理
+        if (intersects.length > 0) {
+          const mx = intersects[0].point.x
+          const my = intersects[0].point.y
+
+          this.markers.forEach((marker, index) => {
+            const originalPos = this.originalMarkerPositions[index]
+            let newX = marker.position.x
+            let newY = marker.position.y
+            
+            // マーカーとマウスの距離を計算
+            const markerDistance = this.distance(mx, my, marker.position.x, marker.position.y)
+            
+            if (this.buttom) {
+              // クリック時: マーカーを押し出す効果
+              if (markerDistance < this.data.area / 3) {
+                const dx = marker.position.x - mx
+                const dy = marker.position.y - my
+                const angle = Math.atan2(dy, dx)
+                const force = (this.data.area / 3 - markerDistance) * 0.005
+                
+                newX += Math.cos(angle) * force
+                newY += Math.sin(angle) * force
+                
+                // マテリアルの色と透明度を変更（より控えめに）
+                const material = marker.material as THREE.MeshBasicMaterial
+                material.color.setHex(0x555555) // より薄いグレー
+                material.opacity = 0.7
+                
+                // スケールとローテーション効果（より控えめに）
+                const scaleEffect = 1.05 + Math.sin(zigzagTime * 4) * 0.03
+                marker.scale.setScalar(scaleEffect)
+                marker.rotation.z = Math.sin(zigzagTime * 3) * 0.02
+              }
+            } else {
+              // ホバー時: マーカーを引き寄せる効果
+              if (markerDistance < this.data.area * 0.6) {
+                const dx = mx - marker.position.x
+                const dy = my - marker.position.y
+                const angle = Math.atan2(dy, dx)
+                const force = (this.data.area * 0.6 - markerDistance) * 0.0005
+                
+                newX += Math.cos(angle) * force
+                newY += Math.sin(angle) * force
+                
+                // マテリアルの色と透明度を変更（より控えめに）
+                const material = marker.material as THREE.MeshBasicMaterial
+                material.color.setHex(0x666666) // 薄いグレー
+                material.opacity = 0.5
+                
+                // ホバー時のスケール効果（より控えめに）
+                const hoverScale = 1.02 + (this.data.area * 0.6 - markerDistance) / (this.data.area * 0.6) * 0.05
+                marker.scale.setScalar(hoverScale)
+                marker.rotation.z = 0
+              } else {
+                // 範囲外の場合は元の色とスケールに戻す
+                const material = marker.material as THREE.MeshBasicMaterial
+                material.color.setHex(0x333333)
+                material.opacity = 0.6
+                marker.scale.setScalar(1.0)
+                marker.rotation.z = 0
+              }
+            }
+            
+            // 元の位置に戻る力を適用（より強い復元力）
+            const markerEase = this.data.ease * 2.5
+            newX += (originalPos.x - newX) * markerEase
+            newY += (originalPos.y - newY) * markerEase
+            
+            marker.position.x = newX
+            marker.position.y = newY
+          })
         }
       }
 
@@ -356,15 +434,21 @@ export default function InteractiveParticleText({ className = '', text }: Intera
           
           const markerGeometry = new THREE.PlaneGeometry(markerWidth, markerHeight)
           const markerMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0x000000, 
+            color: 0x333333, 
             transparent: true, 
-            opacity: 0.8 
+            opacity: 0.6 
           })
           
           const marker = new THREE.Mesh(markerGeometry, markerMaterial)
           // 左揃えにするため、最大幅との差分を計算してオフセット
           const leftOffset = -(maxWidth - data.width) / 2
-          marker.position.set(leftOffset, data.yOffset, -1)
+          const originalPosition = new THREE.Vector3(leftOffset, data.yOffset, -1)
+          marker.position.copy(originalPosition)
+          
+          // マーカーと元のポジションを保存
+          this.markers.push(marker)
+          this.originalMarkerPositions.push(originalPosition.clone())
+          
           this.scene.add(marker)
         })
       }
