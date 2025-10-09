@@ -1,7 +1,7 @@
 import HeroSection from '@/components/sections/about/HeroSection'
 import MemberSection from '@/components/sections/about/MemberSection'
 import CompanySection from '@/components/sections/about/CompanySection'
-import Footer from '@/components/layout/Footer'
+import { StarWarpSpeed } from '@/components/animation/star-warp-speed/StarWarpSpeed'
 
 export default function About() {
   return (
@@ -9,7 +9,7 @@ export default function About() {
       <HeroSection />
       <MemberSection />
       <CompanySection />
-      <Footer />
+      <StarWarpSpeed />
     </div>
   );
 }
