@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 
 interface InteractiveBlackholeProps {
   className?: string
+  onPortalClick?: () => void
 }
 
 interface Star {
@@ -25,7 +26,7 @@ interface Star {
   originalY: number
 }
 
-export default function InteractiveBlackhole({ className = '' }: InteractiveBlackholeProps) {
+export default function InteractiveBlackhole({ className = '', onPortalClick }: InteractiveBlackholeProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationIdRef = useRef<number | null>(null)
@@ -219,6 +220,11 @@ export default function InteractiveBlackhole({ className = '' }: InteractiveBlac
     expanseRef.current = true
     returningRef.current = false
     setIsOpen(true)
+    
+    // 外部のクリックハンドラーがあれば実行
+    if (onPortalClick) {
+      onPortalClick()
+    }
     
     setTimeout(() => {
       expanseRef.current = false
