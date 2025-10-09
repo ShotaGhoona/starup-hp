@@ -47,7 +47,7 @@ export default function InteractiveParticleText({ className = '' }: InteractiveP
         // 'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
         
         // 2. Helvetiker Bold
-        // 'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json',
+        'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json',
         
         // 3. Optimer Regular
         // 'https://threejs.org/examples/fonts/optimer_regular.typeface.json',
@@ -56,7 +56,7 @@ export default function InteractiveParticleText({ className = '' }: InteractiveP
         // 'https://threejs.org/examples/fonts/optimer_bold.typeface.json',
         
         // 5. Gentilis Regular
-        'https://threejs.org/examples/fonts/gentilis_regular.typeface.json',
+        // 'https://threejs.org/examples/fonts/gentilis_regular.typeface.json',
       ]
       
       loader.load(
