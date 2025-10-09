@@ -2,8 +2,7 @@ import HeroSection from '@/components/sections/home/HeroSection'
 import VisionSection from '@/components/sections/home/VisionSection'
 import NetworkSection from '@/components/sections/home/NetworkSection'
 import NewsSection from '@/components/sections/home/NewsSection'
-import Background from '@/components/layout/Background'
-import Footer from '@/components/layout/Footer'
+import { StarWarpSpeed } from '@/components/animation/star-warp-speed/StarWarpSpeed'
 
 export default function Home() {
   return (
@@ -12,8 +11,7 @@ export default function Home() {
       <VisionSection />
       <NetworkSection />
       <NewsSection />
-      
-      <Footer />
+      <StarWarpSpeed />
     </div>
   );
 }
