@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 
 interface Star {
   x: number
@@ -221,6 +222,7 @@ export function StarWarpSpeed({ className = '' }: StarWarpSpeedProps) {
         </div>
         
         {/* お問い合わせボタン */}
+        <Link href="/contact"> 
         <div
           onMouseEnter={enableWarp}
           onMouseLeave={disableWarp}
@@ -232,6 +234,7 @@ export function StarWarpSpeed({ className = '' }: StarWarpSpeedProps) {
         >
           お問い合わせはこちら
         </div>
+        </Link>
       </div>
     </div>
   )

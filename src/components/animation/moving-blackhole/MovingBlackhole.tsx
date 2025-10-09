@@ -1,27 +1,43 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import * as THREE from 'three'
 
 interface MovingBlackholeProps {
   className?: string
 }
 
-export default function MovingBlackhole({ className = '' }: MovingBlackholeProps) {
+interface MovingBlackholeRef {
+  triggerEffect: (x: number, y: number, intensity: number) => void
+}
+
+const MovingBlackhole = forwardRef<MovingBlackholeRef, MovingBlackholeProps>(({ className = '' }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
-  const controlsRef = useRef<any>(null)
   const animationIdRef = useRef<number | null>(null)
   const starFieldRef = useRef<THREE.Points | null>(null)
   const starsMaterialRef = useRef<THREE.ShaderMaterial | null>(null)
   const planetRef = useRef<THREE.Mesh | null>(null)
   const timeRef = useRef(0)
+  const clickRef = useRef({ x: 0, y: 0, intensity: 0, time: 0 })
+
+  useImperativeHandle(ref, () => ({
+    triggerEffect: (x: number, y: number, intensity: number) => {
+      clickRef.current.x = x
+      clickRef.current.y = y
+      clickRef.current.intensity = intensity
+      clickRef.current.time = timeRef.current
+    }
+  }))
 
   // Vertex shader with curl noise
   const vertexShader = `
     uniform float u_time;
+    uniform vec2 u_click;
+    uniform float u_intensity;
+    uniform float u_click_time;
 
     vec3 mod289(vec3 x) {
       return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -141,7 +157,42 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
 
     void main() {
       gl_PointSize = 1.;
-      newPosition = position * (40. + curlNoise(position+u_time/5.)* 10.);
+      
+      vec3 pos = position;
+      vec3 curl = curlNoise(pos + u_time / 5.);
+      
+      // Calculate distance from click point in 3D space
+      vec3 worldPos = pos * 40.0;
+      vec3 clickPos3D = vec3(u_click.x, u_click.y, 0.0);
+      float dist = distance(worldPos, clickPos3D);
+      
+      // Create explosion/dispersal effect
+      float timeSinceClick = u_time - u_click_time;
+      float waveRadius = timeSinceClick * 80.0; // Faster wave speed
+      float waveStrength = u_intensity * exp(-timeSinceClick * 1.5); // Slower decay
+      
+      // Multiple wave effects for more dynamic feel
+      float wave1 = exp(-abs(dist - waveRadius) * 0.05);
+      float wave2 = exp(-abs(dist - waveRadius * 0.7) * 0.08);
+      float wave3 = exp(-abs(dist - waveRadius * 0.4) * 0.12);
+      
+      float combinedWave = (wave1 + wave2 * 0.6 + wave3 * 0.4) * waveStrength;
+      
+      // Direction away from click point (dispersal)
+      vec3 dispersalDir = normalize(worldPos - clickPos3D);
+      
+      // Add randomness to dispersal direction
+      vec3 randomOffset = curlNoise(worldPos * 0.1 + timeSinceClick);
+      dispersalDir += randomOffset * 0.3;
+      dispersalDir = normalize(dispersalDir);
+      
+      // Apply stronger dispersal force with distance falloff
+      float distanceFactor = 1.0 / (1.0 + dist * 0.01);
+      pos += dispersalDir * combinedWave * 0.8 * distanceFactor;
+      
+      // Apply curl noise with wave influence
+      newPosition = pos * (40. + curl * (10. + combinedWave * 4.0));
+      
       gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
     }
   `
@@ -158,7 +209,37 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
   useEffect(() => {
     if (!containerRef.current) return
 
-    const initScene = async () => {
+    let containerElement: HTMLElement | null = null
+
+    const handleClick = (event: MouseEvent) => {
+      if (!containerRef.current) return
+      
+      const rect = containerRef.current.getBoundingClientRect()
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1
+      
+      clickRef.current.x = x * 80
+      clickRef.current.y = y * 80
+      clickRef.current.intensity = 2.0
+      clickRef.current.time = timeRef.current
+    }
+
+    const handleResize = () => {
+      if (!cameraRef.current || !rendererRef.current) return
+
+      const ww = window.innerWidth
+      const wh = window.innerHeight
+
+      cameraRef.current.aspect = ww / wh
+      cameraRef.current.updateProjectionMatrix()
+      rendererRef.current.setSize(ww, wh)
+    }
+
+    // Wait for page transition to complete
+    const timer = setTimeout(() => {
+      if (!containerRef.current) return
+
+      const initScene = async () => {
       const ww = window.innerWidth
       const wh = window.innerHeight
 
@@ -176,18 +257,11 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
       renderer.setSize(ww, wh)
       renderer.setClearColor(0xd8d8d8, 1)
       rendererRef.current = renderer
-      containerRef.current.appendChild(renderer.domElement)
+      containerRef.current?.appendChild(renderer.domElement)
 
-      // Load OrbitControls
-      const { OrbitControls } = await import('three/examples/jsm/controls/OrbitControls.js')
-      const controls = new OrbitControls(camera, renderer.domElement)
-      controlsRef.current = controls
 
       // Create stars
       createStars()
-      
-      // Create planet (blackhole)
-      createPlanet()
     }
 
     const createStars = () => {
@@ -209,7 +283,10 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
       starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
       const uniforms = {
-        u_time: { value: 1.0 }
+        u_time: { value: 1.0 },
+        u_click: { value: new THREE.Vector2(0, 0) },
+        u_intensity: { value: 0.0 },
+        u_click_time: { value: 0.0 }
       }
 
       const starsMaterial = new THREE.ShaderMaterial({
@@ -225,29 +302,16 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
       sceneRef.current.add(starField)
     }
 
-    const createPlanet = () => {
-      if (!sceneRef.current) return
-
-      const planGeo = new THREE.SphereGeometry(20, 32, 32)
-      const planMat = new THREE.MeshBasicMaterial({ 
-        color: 0x000000, 
-        flatShading: true 
-      })
-
-      const planet = new THREE.Mesh(planGeo, planMat)
-      planetRef.current = planet
-      sceneRef.current.add(planet)
-    }
 
     const animate = () => {
       timeRef.current += 0.01
 
       if (starsMaterialRef.current) {
         starsMaterialRef.current.uniforms.u_time.value = timeRef.current
-      }
-
-      if (controlsRef.current) {
-        controlsRef.current.update()
+        starsMaterialRef.current.uniforms.u_click.value.x = clickRef.current.x
+        starsMaterialRef.current.uniforms.u_click.value.y = clickRef.current.y
+        starsMaterialRef.current.uniforms.u_intensity.value = clickRef.current.intensity
+        starsMaterialRef.current.uniforms.u_click_time.value = clickRef.current.time
       }
 
       if (rendererRef.current && sceneRef.current && cameraRef.current) {
@@ -257,25 +321,24 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
       animationIdRef.current = requestAnimationFrame(animate)
     }
 
-    const handleResize = () => {
-      if (!cameraRef.current || !rendererRef.current) return
-
-      const ww = window.innerWidth
-      const wh = window.innerHeight
-
-      cameraRef.current.aspect = ww / wh
-      cameraRef.current.updateProjectionMatrix()
-      rendererRef.current.setSize(ww, wh)
-    }
-
     initScene().then(() => {
       animate()
     })
 
     window.addEventListener('resize', handleResize)
+    containerElement = containerRef.current
+    if (containerElement) {
+      containerElement.addEventListener('click', handleClick)
+    }
+    }, 200) // Wait longer than PageTransition delay
 
     return () => {
+      clearTimeout(timer)
       window.removeEventListener('resize', handleResize)
+      
+      if (containerElement) {
+        containerElement.removeEventListener('click', handleClick)
+      }
       
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current)
@@ -292,7 +355,10 @@ export default function MovingBlackhole({ className = '' }: MovingBlackholeProps
     <div 
       ref={containerRef} 
       className={`w-full h-full overflow-hidden ${className}`}
-      style={{ margin: 0, background: '#d8d8d8' }}
     />
   )
-}
+})
+
+MovingBlackhole.displayName = 'MovingBlackhole'
+
+export default MovingBlackhole
