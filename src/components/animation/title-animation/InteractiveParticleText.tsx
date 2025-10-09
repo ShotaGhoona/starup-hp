@@ -6,9 +6,10 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 
 interface InteractiveParticleTextProps {
   className?: string
+  text: string
 }
 
-export default function InteractiveParticleText({ className = '' }: InteractiveParticleTextProps) {
+export default function InteractiveParticleText({ className = '', text }: InteractiveParticleTextProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -102,7 +103,8 @@ export default function InteractiveParticleText({ className = '' }: InteractiveP
           this.font, 
           this.particle, 
           this.camera, 
-          this.renderer
+          this.renderer,
+          text
         )
       }
 
@@ -154,16 +156,16 @@ export default function InteractiveParticleText({ className = '' }: InteractiveP
       currenPosition: THREE.Vector3 | null = null
 
       data = {
-        text: 'Star Up\nCore with AI',
+        text: '',
         amount: 1500,
         particleSize: 1,
         particleColor: 0xffffff,
-        textSize: 12,
+        textSize: 8,
         area: 250,
         ease: 0.05,
       }
 
-      constructor(scene: THREE.Scene, font: any, particleImg: THREE.Texture, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) {
+      constructor(scene: THREE.Scene, font: any, particleImg: THREE.Texture, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer, text: string) {
         this.scene = scene
         this.font = font
         this.particleImg = particleImg
@@ -174,6 +176,7 @@ export default function InteractiveParticleText({ className = '' }: InteractiveP
         this.mouse = new THREE.Vector2(-200, 200)
         this.colorChange = new THREE.Color()
 
+        this.data.text = text
         this.setup()
         this.bindEvents()
       }

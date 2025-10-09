@@ -12,7 +12,7 @@ const HeroSection = () => {
         {/* パーティクルテキストを左寄りに配置 */}
         <div className="absolute inset-0 flex items-center justify-start -translate-x-1/6">
           <div className="w-full h-[60rem]">
-            <InteractiveParticleText className="w-full h-full" />
+            <InteractiveParticleText className="w-full h-full" text={"Star Up\nCore with AI"} />
           </div>
         </div>
       </div>
