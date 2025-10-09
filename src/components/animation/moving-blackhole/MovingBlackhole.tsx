@@ -255,7 +255,7 @@ const MovingBlackhole = forwardRef<MovingBlackholeRef, MovingBlackholeProps>(({ 
       // Renderer setup
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
       renderer.setSize(ww, wh)
-      renderer.setClearColor(0xd8d8d8, 1)
+      renderer.setClearColor(0x000000, 0)
       rendererRef.current = renderer
       containerRef.current?.appendChild(renderer.domElement)
 
