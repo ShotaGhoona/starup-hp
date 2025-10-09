@@ -1,58 +1,35 @@
 'use client'
 
 import { Facebook, Linkedin } from 'lucide-react'
+import { Member } from '@/data/member/member'
 
 interface MemberCardProps {
-  name: string
-  englishName?: string
-  position: string
-  description: string
-  image?: string
-  socialLinks?: {
-    twitter?: string
-    facebook?: string
-    linkedin?: string
-  }
+  member: Member
   className?: string
 }
 
 export default function MemberCard({ 
-  name, 
-  englishName, 
-  position, 
-  description, 
-  image, 
-  socialLinks,
+  member,
   className = '' 
 }: MemberCardProps) {
+  const { name, englishName, position, description, image, socialLinks } = member
   return (
-    <div className={`bg-white rounded-lg overflow-hidden shadow-lg ${className}`}>
+    <div className={` ${className}`}>
       {/* 画像エリア */}
-      <div className="relative aspect-square bg-gray-100">
+      <div className="aspect-square relative">
         {/* 青いグラデーション装飾 */}
-        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-[#878DFF] to-[#0928FB] rounded-tr-lg translate-x-2 translate-y-2 z-10"></div>
-        
-        {/* 写真 */}
-        <div className="relative w-full h-full -translate-x-1 -translate-y-1">
-          {image ? (
+          <div className="w-[95%] h-[95%] bg-gradient-to-br from-[#878DFF] to-[#0928FB] rounded-tl-3xl rounded-br-3xl absolute bottom-0 left-0"></div>
+          <div className="w-[95%] h-[95%] z-10 absolute top-0 right-0">
             <img 
               src={image} 
               alt={name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-tl-3xl rounded-br-3xl"
             />
-          ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gray-400">
-                <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
-                <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
-              </svg>
-            </div>
-          )}
-        </div>
+          </div>
       </div>
       
       {/* テキスト情報 */}
-      <div className="p-6">
+      <div className="py-6">
         {/* 役職 */}
         <p className="text-sm text-gray-500 mb-2">{position}</p>
         
