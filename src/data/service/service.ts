@@ -15,7 +15,7 @@ export interface ServiceCategory {
 export const serviceData: ServiceCategory[] = [
   {
     id: "saas",
-    title: "SaaS開発",
+    title: "SaaS開発事業",
     cards: [
       {
         id: 1,
@@ -49,7 +49,7 @@ export const serviceData: ServiceCategory[] = [
   },
   {
     id: "contract",
-    title: "受託開発・共同開発",
+    title: "AIソリューション事業",
     cards: [
       {
         id: 1,
