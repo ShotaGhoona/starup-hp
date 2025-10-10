@@ -51,7 +51,7 @@ export default function NewsDetailHeroSection({ post }: NewsDetailHeroSectionPro
             <time className="text-sm text-white/80">{post.date}</time>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
             {post.title}
           </h1>
           

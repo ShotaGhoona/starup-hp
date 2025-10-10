@@ -10,17 +10,7 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
   return (
     <section className="relative py-20 px-8">
       <div className="relative max-w-4xl mx-auto">
-        <div className="mb-8">
-          <Link
-            href="/news"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            <ChevronLeft size={20} />
-            ニュース一覧に戻る
-          </Link>
-        </div>
-
-        <article className="bg-white rounded-lg shadow-sm p-8">
+        <article className="bg-white rounded-lg p-8">
           <div className="prose prose-lg prose-gray max-w-none">
             <div
               className="leading-relaxed"
