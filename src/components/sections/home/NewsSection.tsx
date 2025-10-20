@@ -1,6 +1,7 @@
 import { getNewsPostsForHomepage } from '@/lib/mdx'
 import Link from 'next/link'
 import Background from '@/components/layout/Background'
+import ViewMoreLink from '@/components/ui/ViewMoreLink'
 
 export default function NewsSection() {
   const newsData = getNewsPostsForHomepage(3)
@@ -43,11 +44,7 @@ export default function NewsSection() {
               ))}
             </div>
             
-            <div className="mt-8 text-right">
-              <Link href="/news" className="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-700 border border-gray-300 hover:bg-gray-50 transition-colors">
-                Read More News
-              </Link>
-            </div>
+            <ViewMoreLink href="/news" />
           </div>
         </div>
       </div>

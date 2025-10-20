@@ -1,7 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import MovingBlackhole from '@/components/animation/moving-blackhole/MovingBlackhole'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
+import SpaceBackgroundFooter from '@/components/animation/background-animation/SpaceBackgroundFooter'
 import ContactCard from '@/components/ui/ContactCard'
 
 interface ContactSectionProps {
@@ -22,13 +24,50 @@ export default function ContactSection({ className = '' }: ContactSectionProps) 
   }
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center ${className} bg-[#d8d8d8]`} >
+    <section className={`relative h-screen flex items-center ${className} bg-[#d8d8d8]`} >
       <div className="absolute inset-0">
-        <MovingBlackhole ref={blackholeRef} />
+        <SpaceBackgroundFooter/>
       </div>
       
-      <div className="w-full max-w-md mx-auto px-6">
-        <ContactCard onInputFocus={handleInputFocus} />
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left side - Logo and text */}
+        <div className="relative z-20 flex flex-col items-start space-y-6">
+          {/* Breadcrumb */}
+          <nav className="mb-5" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 text-sm text-white/80">
+              <li>
+                <Link href="/" className="hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <ChevronRight size={16} className="text-white/60" />
+              </li>
+              <li className="text-white font-medium">
+                Contact
+              </li>
+            </ol>
+          </nav>
+
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/icons/starup-logo-white.svg" 
+              alt="STARUP Logo" 
+              className="w-16 h-16"
+            />
+            <h1 className="text-4xl lg:text-5xl font-bold text-white">
+              STAR UP
+            </h1>
+          </div>
+          <p className="text-lg lg:text-xl text-white/90">
+            宇宙に新しい常識を。
+          </p>
+        </div>
+        
+        {/* Right side - Contact form */}
+        <div className="relative z-20 w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+          <ContactCard onInputFocus={handleInputFocus} />
+        </div>
       </div>
     </section>
   )

@@ -39,12 +39,12 @@ export default function ContactCard({ className = '', onInputFocus }: ContactCar
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
       }}
     >
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">CONTACT US</h2>
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">CONTACT US</h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-bold text-gray-900 mb-2">
-            お名前 <span className="text-red-500">*</span>
+          <label htmlFor="name" className="block text-sm font-bold text-white mb-2">
+            お名前 <span className="text-red-400">*</span>
           </label>
           <input
             type="text"
@@ -60,8 +60,8 @@ export default function ContactCard({ className = '', onInputFocus }: ContactCar
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-bold text-gray-900 mb-2">
-            メールアドレス <span className="text-red-500">*</span>
+          <label htmlFor="email" className="block text-sm font-bold text-white mb-2">
+            メールアドレス <span className="text-red-400">*</span>
           </label>
           <input
             type="email"
@@ -77,7 +77,7 @@ export default function ContactCard({ className = '', onInputFocus }: ContactCar
         </div>
 
         <div>
-          <label htmlFor="company" className="block text-sm font-bold text-gray-900 mb-2">
+          <label htmlFor="company" className="block text-sm font-bold text-white mb-2">
             会社名
           </label>
           <input
@@ -93,8 +93,8 @@ export default function ContactCard({ className = '', onInputFocus }: ContactCar
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-bold text-gray-900 mb-2">
-            メッセージ <span className="text-red-500">*</span>
+          <label htmlFor="message" className="block text-sm font-bold text-white mb-2">
+            メッセージ <span className="text-red-400">*</span>
           </label>
           <textarea
             id="message"
