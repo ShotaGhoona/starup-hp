@@ -1,4 +1,4 @@
-import DimensionalPortal from "@/components/animation/dimensional-portal/DimensionalPortal"
+import DimensionalPortalSimple from "@/components/animation/dimensional-portal/DimensionalPortalSimple"
 export default function TestPage() {
-  return <DimensionalPortal />
+  return <DimensionalPortalSimple />
 }

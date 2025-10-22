@@ -288,6 +288,9 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
   const lastPulseIndexRef = useRef<number>(0)
   const controlsRef = useRef<any>(null)
   const composerRef = useRef<any>(null)
+  const starsSmallRef = useRef<THREE.Points | null>(null)
+  const starsMediumRef = useRef<THREE.Points | null>(null)
+  const starsLargeRef = useRef<THREE.Points | null>(null)
 
   const [config, setConfig] = useState<Config>({
     paused: false,
@@ -779,7 +782,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
     scene.fog = new THREE.FogExp2(0x333333, 0.0015)
     sceneRef.current = scene
 
-    const camera = new THREE.PerspectiveCamera(60, mountRef.current.offsetWidth / mountRef.current.offsetHeight, 0.1, 1200)
+    const camera = new THREE.PerspectiveCamera(40, mountRef.current.offsetWidth / mountRef.current.offsetHeight, 0.1, 1200)
     camera.position.set(0, 5, 22)
     cameraRef.current = camera
 
@@ -790,6 +793,27 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
     renderer.outputColorSpace = THREE.SRGBColorSpace
     rendererRef.current = renderer
     mountRef.current.appendChild(renderer.domElement)
+
+    // Stars background - 3 layers (small / medium / large)
+    const createStars = (count: number, size: number, spread: number, color = 0xffffff) => {
+      const geometry = new THREE.BufferGeometry()
+      const positions = new Float32Array(count * 3)
+      for (let i = 0; i < count * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * spread
+        positions[i + 1] = (Math.random() - 0.5) * spread
+        positions[i + 2] = (Math.random() - 0.5) * spread
+      }
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+      const material = new THREE.PointsMaterial({ color, size, sizeAttenuation: true })
+      const points = new THREE.Points(geometry, material)
+      scene.add(points)
+      return points
+    }
+
+    // small, medium, large
+    starsSmallRef.current = createStars(3500, 0.03, 220)
+    starsMediumRef.current = createStars(2000, 0.08, 200)
+    starsLargeRef.current = createStars(800, 0.18, 180)
 
     // Load OrbitControls - This will be async but should work
     import('three/examples/jsm/controls/OrbitControls.js').then(({ OrbitControls }) => {
@@ -840,6 +864,18 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
       const t = clockRef.current.getElapsedTime()
 
       if (!config.paused) {
+        if (starsSmallRef.current) {
+          starsSmallRef.current.rotation.x += 0.0003
+          starsSmallRef.current.rotation.y += 0.0003
+        }
+        if (starsMediumRef.current) {
+          starsMediumRef.current.rotation.x += 0.0005
+          starsMediumRef.current.rotation.y += 0.0005
+        }
+        if (starsLargeRef.current) {
+          starsLargeRef.current.rotation.x += 0.0007
+          starsLargeRef.current.rotation.y += 0.0007
+        }
         if (nodesMeshRef.current) {
           const material = nodesMeshRef.current.material as THREE.ShaderMaterial
           material.uniforms.uTime.value = t
@@ -904,6 +940,19 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current)
       }
+      const disposePoints = (points: THREE.Points | null) => {
+        if (!points) return
+        const geo = points.geometry as THREE.BufferGeometry
+        const mat = points.material as THREE.PointsMaterial
+        geo.dispose()
+        mat.dispose()
+      }
+      disposePoints(starsSmallRef.current)
+      disposePoints(starsMediumRef.current)
+      disposePoints(starsLargeRef.current)
+      starsSmallRef.current = null
+      starsMediumRef.current = null
+      starsLargeRef.current = null
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement)
       }
