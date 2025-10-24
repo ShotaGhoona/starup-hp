@@ -1,24 +1,26 @@
-import HeroSection from '@/components/sections/home/HeroSection'
-import VisionSection from '@/components/sections/home/VisionSection'
-import NetworkSection from '@/components/sections/home/NetworkSection'
-import NewsSection from '@/components/sections/home/NewsSection'
-import ServiceSection from '@/components/sections/home/ServiceSection'
-import RecruitSection from '@/components/sections/home/RecruitSection'
-import { StarWarpSpeed } from '@/components/animation/star-warp-speed/StarWarpSpeed'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import Header from "@/components/layout/Header"
+import HeroSection from "@/components/sections/home/HeroSection"
+import VisionSection from "@/components/sections/home/VisionSection"
+import ServiceSection from "@/components/sections/home/ServiceSection"
+import ServiceDetailSection from "@/components/sections/home/ServiceDetailSection"
+import Footer from "@/components/layout/Footer"
+import ContactSection from "@/components/sections/home/ContactSection"
+import RectuitSection from "@/components/sections/home/RecruitSection"
+import TechSection from "@/components/sections/home/TechSection"
+import NewsSection from "@/components/sections/home/NewsSection"
 export default function Home() {
   return (
     <div className="relative">
       <Header />
-      <HeroSection />     
+      <HeroSection />
       <VisionSection />
-      <NetworkSection />
+      <TechSection/>
       <ServiceSection />
+      <ServiceDetailSection />
       <NewsSection />
-      <StarWarpSpeed />
-      <RecruitSection />
+      <RectuitSection />
+      <ContactSection />
       <Footer />
     </div>
-  );
+  )
 }
