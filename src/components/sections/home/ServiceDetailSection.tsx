@@ -148,7 +148,7 @@ export default function ServiceDetailSection() {
     }
 
     return (
-        <div className="min-h-screen bg-white relative z-20">
+        <div className="min-h-screen bg-white relative z-20 sticky-container">
             <div className="max-w-[1500px] mx-auto px-4">
                 {sections.map((section, sectionIndex) => (
                     <div 

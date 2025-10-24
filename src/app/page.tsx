@@ -11,16 +11,20 @@ import NewsSection from "@/components/sections/home/NewsSection"
 export default function Home() {
   return (
     <div className="relative">
-      <Header />
-      <HeroSection />
-      <VisionSection />
-      <MissionSection/>
-      <ServiceSection />
+      <div className="overflow-x-hidden">
+        <Header />
+        <HeroSection />
+        <VisionSection />
+        <MissionSection/>
+        <ServiceSection />
+      </div>
       <ServiceDetailSection />
-      <NewsSection />
-      <RectuitSection />
-      <ContactSection />
-      <Footer />
+      <div className="overflow-x-hidden">
+        <NewsSection />
+        <RectuitSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </div>
   )
 }
