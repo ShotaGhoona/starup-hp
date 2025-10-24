@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function ServiceSection() {
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useRef<HTMLDivElement>(null)
     const descriptionRef = useRef<HTMLDivElement>(null)
     const service1CardRef = useRef<HTMLDivElement>(null)
     const service2CardRef = useRef<HTMLDivElement>(null)
@@ -487,17 +486,24 @@ export default function ServiceSection() {
     // GSAPアニメーション
     useEffect(() => {
         const section = sectionRef.current
-        const title = titleRef.current
         const description = descriptionRef.current
         const service1Card = service1CardRef.current
         const service2Card = service2CardRef.current
         const service3Card = service3CardRef.current
 
-        if (!section || !title || !description || !service1Card || !service2Card || !service3Card || !cameraRef.current) return
+        if (!section || !description || !service1Card || !service2Card || !service3Card) return
 
-        // 初期状態設定
-        gsap.set([title, description, service1Card, service2Card, service3Card], { opacity: 0 })
-        gsap.set(title, { opacity: 1 }) // タイトルは最初に表示
+        // 初期状態設定（全要素を非表示）
+        gsap.set([description, service1Card, service2Card, service3Card], { opacity: 0 })
+
+        // モバイルの場合は静的に表示
+        if (window.innerWidth < 1024) {
+            gsap.set([description, service1Card, service2Card, service3Card], { opacity: 1 })
+            return
+        }
+
+        // デスクトップ版のアニメーション
+        if (!cameraRef.current) return
 
         // カメラのlookAt用のダミーオブジェクト
         const cameraTarget = { x: 0, y: 0, z: 0 }
@@ -513,13 +519,10 @@ export default function ServiceSection() {
             }
         })
 
-        // 30%: タイトルを消して説明文を表示し、カメラを左に向ける
-        tl.to(title, {
-            opacity: 0,
-            duration: 0.2,
-            ease: "power2.out"
-        }, 0.3)
-        .to(description, {
+        // 0-30%: 何も表示しない（空の状態）
+        
+        // 30%: 説明文を表示し、カメラを左に向ける
+        tl.to(description, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
