@@ -1,9 +1,8 @@
-import TechSection from "@/components/sections/home2/TechSection"
-import TechSection2 from "@/components/sections/home2/TechSection2"
+import ServiceSection from "@/components/sections/home2/ServiceSection"
 export default function TechPage() {
   return (
-    <div>
-      <TechSection2 />
+    <div className="relative w-full">
+      <ServiceSection />
     </div>
   )
 }

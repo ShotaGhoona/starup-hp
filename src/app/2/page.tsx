@@ -7,15 +7,17 @@ import Footer2 from "@/components/layout/Footer2"
 import ContactSection from "@/components/sections/home2/ContactSection"
 import RectuitSection from "@/components/sections/home/RecruitSection"
 import TechSection from "@/components/sections/home2/TechSection"
+import NewsSection from "@/components/sections/home2/NewsSection"
 export default function Page2() {
   return (
     <div className="relative">
       <Header2 />
       <HeroSection />
       <VisionSection />
+      <TechSection/>
       <ServiceSection />
-      {/* <TechSection/> */}
       <ServiceDetailSection />
+      <NewsSection />
       <RectuitSection />
       <ContactSection />
       <Footer2 />

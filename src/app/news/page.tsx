@@ -1,16 +1,15 @@
-import NewsListHeroSection from '@/components/sections/news-list/NewsListHeroSection'
+
 import NewsListSection from '@/components/sections/news-list/NewsListSection'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import Header2 from '@/components/layout/Header2'
+import Footer2 from '@/components/layout/Footer2'
 import Background from '@/components/layout/Background'
 
 export default function NewsPage() {
   return (
     <div className="min-h-screen">
-      <Header />
-      <NewsListHeroSection />
+      <Header2 />
       <NewsListSection />
-      <Footer />
+      <Footer2 />
     </div>
   )
 }

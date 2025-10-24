@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getAllNewsPostSlugs, getNewsPostBySlug } from '@/lib/mdx'
-import NewsDetailHeroSection from '@/components/sections/news-detail/NewsDetailHeroSection'
 import NewsDetailContentSection from '@/components/sections/news-detail/NewsDetailContentSection'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import Header2 from '@/components/layout/Header2'
+import Footer2 from '@/components/layout/Footer2'
 
 interface NewsPostPageProps {
   params: Promise<{ slug: string }>
@@ -24,10 +23,9 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
     
     return (
       <div className="min-h-screen">
-        <Header />
-        <NewsDetailHeroSection post={post} />
+        <Header2 />
         <NewsDetailContentSection post={post} />
-        <Footer />
+        <Footer2 />
       </div>
     )
   } catch {

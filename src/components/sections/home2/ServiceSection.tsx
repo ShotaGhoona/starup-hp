@@ -596,14 +596,6 @@ export default function ServiceSection() {
         <section ref={sectionRef} className="relative h-screen bg-black overflow-hidden">
             {/* Three.js Canvas */}
             <div ref={containerRef} className="absolute inset-0" />
-
-            {/* Loading overlay */}
-            {isLoading && (
-                <div className="fixed inset-0 bg-gradient-to-br from-black to-purple-900 flex justify-center items-center z-50">
-                    <div className="w-32 h-32 border-8 border-transparent border-t-purple-500 border-b-blue-500 rounded-full animate-spin"></div>
-                </div>
-            )}
-
             {/* タイトル - 中央 */}
             <div 
                 ref={titleRef}
