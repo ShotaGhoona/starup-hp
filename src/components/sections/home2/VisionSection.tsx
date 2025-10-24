@@ -44,47 +44,49 @@ export default function VisionSection() {
         gsap.set(container, { opacity: 1 })
         gsap.set(scrollPrompt, { opacity: 0, y: 20 })
 
-        // 0-30%: 背景色をグレーから白に
+        // 0-5%: 背景色をグレーから白に (60%の12%)
         tl.to(section, {
             backgroundColor: "#ffffff",
-            duration: 0.3
+            duration: 0.05
         })
         
-        // 30-60%: 1行目を一文字ずつフェードイン
+        // 5-15%: 1行目を一文字ずつフェードイン (60%の12%)
         const chars = line1.querySelectorAll('.char')
         chars.forEach((char, index) => {
             tl.to(char, {
                 opacity: 1,
                 y: 0,
-                duration: 0.02,
+                duration: 0.01,
                 ease: "power2.out"
-            }, 0.3 + (index * 0.01)) // 各文字を少しずつ遅らせる
+            }, 0.05 + (index * 0.005)) // 各文字を少しずつ遅らせる
         })
         
-        // 60-80%: 2行目を一気にフェードイン
+        // 15-25%: 2行目を一気にフェードイン (60%の12%)
         tl.to(line2, {
             opacity: 1,
             y: 0,
-            duration: 0.2,
+            duration: 0.05,
             ease: "power2.out"
-        }, 0.6)
+        }, 0.15)
         
-        // 80-90%: 2行目にグラデーション
+        // 25-48%: 2行目にグラデーション (60%の12%)
         tl.to(line2, {
             backgroundImage: "linear-gradient(90deg, #8B5CF6 0%, #06B6D4 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            duration: 0.1
-        }, 0.8)
+            duration: 0.06
+        }, 0.25)
         
-        // 90-100%: スクロールプロンプトを表示
+        // 48-60%: スクロールプロンプトを表示 (60%の12%)
         tl.to(scrollPrompt, {
             opacity: 1,
             y: 0,
-            duration: 0.1,
+            duration: 0.06,
             ease: "power2.out"
-        }, 0.9)
+        }, 0.48)
+        
+        // 60-100%: 何も変化させない（最後の40%）
         
         // スクロールアイコンのループアニメーション
         gsap.to(scrollPrompt.querySelector('.scroll-icon'), {
