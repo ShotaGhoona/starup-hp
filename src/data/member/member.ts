@@ -34,16 +34,6 @@ export interface Member {
       socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
     },
     {
-      id: "hachiki-ikeda",
-      name: "池田八輝",
-      englishName: "Hachiki Ikeda",
-      position: "執行役員",
-      description:
-        "受託開発事業部の統括と主に物流部門のプロジェクトを担当。「倉庫シェアリングサービスのマッチングモデルの構築」「特殊車両経路選択モデルの構築」などの物流システムの研究を経て、「需要予測ツールの開発」や「配送経路最適化ツール」の開発に取り組んでいる。",
-      image: "/images/member/ikeda-hatchiki.png",
-      socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
-    },
-    {
       id: "yuki-tanaka",
       name: "田中祐希",
       englishName: "Yuki Tanaka",
@@ -51,6 +41,16 @@ export interface Member {
       description:
         "大手IT企業をはじめとする3社にてPM・リードエンジニアを経験した後フリーランスエンジニアとして数十件の案件に携わる。生成AIを活用した新規事業立ち上げ、業務効率化、システム開発などを経験する。",
       image: "/images/member/tanaka-yuki.png",
+      socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
+    },
+    {
+      id: "hachiki-ikeda",
+      name: "池田八輝",
+      englishName: "Hachiki Ikeda",
+      position: "執行役員",
+      description:
+        "受託開発事業部の統括と主に物流部門のプロジェクトを担当。「倉庫シェアリングサービスのマッチングモデルの構築」「特殊車両経路選択モデルの構築」などの物流システムの研究を経て、「需要予測ツールの開発」や「配送経路最適化ツール」の開発に取り組んでいる。",
+      image: "/images/member/ikeda-hatchiki.png",
       socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
     },
     {

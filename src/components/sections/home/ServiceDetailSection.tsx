@@ -7,35 +7,137 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function ServiceDetailSection() {
-    const [activeTabs, setActiveTabs] = useState([0, 0, 0, 0])
+    const [activeTabs, setActiveTabs] = useState([0, 0, 0])
     const titleRefs = useRef<(HTMLHeadingElement | null)[]>([])
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
     const progressRefs = useRef<(HTMLDivElement | null)[]>([]) 
 
     const sections = [
         {
+            title: "STAR UP.AI AI開発プラットフォーム",
+            description: "経営、現場、研究の各部門をAIで統合し、データドリブンな意思決定を実現する包括的なAI開発プラットフォームです。",
+            imageSrc: "/images/services/ai-solution.jpg",
+            detailsContent: `
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">統合AIプラットフォームの特徴</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">経営部門</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>計画管理</strong> - 戦略的計画立案をAIでサポート</li>
+                                <li><strong>財務分析</strong> - リアルタイム財務データの可視化</li>
+                                <li><strong>需要予測</strong> - LLMを活用した高精度予測</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">現場部門</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>製造管理</strong> - 生産工程の最適化</li>
+                                <li><strong>品質管理</strong> - 画像処理による自動検査</li>
+                                <li><strong>工程管理</strong> - BI機能でリアルタイム監視</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">研究部門</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>試験・分析</strong> - 統計処理による高度なデータ分析</li>
+                                <li><strong>実証実験</strong> - 最適化アルゴリズムによる効率化</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-gray-800 pl-4 py-2">
+                        <p class="text-gray-800 font-medium"><strong>統合のメリット:</strong> 部署間の連携を強化し、組織全体の生産性向上を実現</p>
+                    </div>
+                </div>
+            `
+        },
+        {
             title: "図面起点のAI管理 ARCHAIVE",
-            description: "Build AI apps, actions, and agents in Workflow Builder an intuitive workspace designed with next-gen AI builders in mind.",
-            videoContent: "AI workflow building demonstration video placeholder",
-            detailsContent: "Our AI Workflow Builder provides a comprehensive platform for creating sophisticated AI applications. With drag-and-drop functionality, pre-built components, and seamless integration capabilities, you can build powerful AI solutions without extensive coding knowledge."
+            description: "社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。",
+            imageSrc: "/images/services/archaive.jpg",
+            detailsContent: `
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">AI図面データ活用プラットフォーム</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">主な機能・サービス</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>AI類似図面検索</strong> - 膨大な過去の図面データから似た図面を瞬時に検索</li>
+                                <li><strong>AIチャット型データ検索</strong> - 欲しいデータが「話す」とすぐに見つかる</li>
+                                <li><strong>案件管理機能</strong> - 図面に紐づく情報（自動解析）・書類を一元管理</li>
+                                <li><strong>導入サポート</strong> - 現場定着までのDXを伴走支援</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">データ管理の革新</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>社内に点在したデータを一元管理</li>
+                                <li>部署間の壁をなくし、欲しいデータをAIにより一瞬で検索</li>
+                                <li>類似度99%以上の高精度検索機能</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">対象業界</h4>
+                            <p class="text-gray-700">製造業、建設業、設計業界など、図面データを扱うあらゆる業界に対応</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-gray-800 pl-4 py-2">
+                        <p class="text-gray-800 font-medium"><strong>効果:</strong> 図面検索時間を90%短縮、部署間連携の効率化を実現</p>
+                    </div>
+                </div>
+            `
         },
         {
-            title: "Smart Analytics Engine",
-            description: "Transform raw data into actionable insights with our advanced analytics engine powered by machine learning algorithms.",
-            videoContent: "Analytics dashboard demonstration video placeholder",
-            detailsContent: "The Smart Analytics Engine processes large datasets in real-time, identifying patterns and trends that would be impossible to detect manually. Our machine learning models continuously improve their accuracy, providing increasingly valuable insights for your business decisions."
-        },
-        {
-            title: "Automated Process Management",
-            description: "Streamline your business operations with intelligent automation that adapts to your workflow requirements.",
-            videoContent: "Process automation demonstration video placeholder",
-            detailsContent: "Our Automated Process Management system learns from your existing workflows and suggests optimizations. It can handle complex business rules, exception handling, and seamless integration with existing systems, reducing manual work by up to 80%."
-        },
-        {
-            title: "Cloud Infrastructure Suite",
-            description: "Deploy and scale your applications with our robust cloud infrastructure designed for enterprise-grade performance.",
-            videoContent: "Cloud deployment demonstration video placeholder",
-            detailsContent: "Built on modern cloud technologies, our infrastructure suite provides automatic scaling, high availability, and enterprise-level security. With global CDN support and 99.9% uptime guarantee, your applications will perform optimally worldwide."
+            title: "サプライチェーン支援AI SEND AI",
+            description: "需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。",
+            imageSrc: "/images/services/sendai.jpg",
+            detailsContent: `
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">サプライチェーン支援AIソリューション</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">主な機能・サービス</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>需要予測AI</strong> - 業態やPoCからオーダーメイドの高精度アルゴリズムを開発</li>
+                                <li><strong>発注機能</strong> - 個社ごとの発注フローをシステム化により効率化</li>
+                                <li><strong>BI機能</strong> - 中長期の戦略策定の材料となる各種データを可視化</li>
+                                <li><strong>導入サポート</strong> - PoCから本稼働、運用改善までワンストップで支援</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">在庫管理の最適化</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><strong>在庫切れ予測</strong> - 先1ヶ月・先半年の売上予測</li>
+                                <li><strong>店舗別在庫管理</strong> - 各店舗の在庫数と在庫週数をリアルタイム表示</li>
+                                <li><strong>補充履歴</strong> - 過去の補充データから最適な発注タイミングを算出</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3 text-lg">売上分析機能</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>全体店舗分析・新商品分析</li>
+                                <li>過去6ヶ月の平均売上データ</li>
+                                <li>前月比の売上・在庫数変化を可視化</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-gray-800 pl-4 py-2">
+                        <p class="text-gray-800 font-medium"><strong>成果:</strong> 在庫最適化により売上最大化とコスト削減を同時実現</p>
+                    </div>
+                </div>
+            `
         }
     ]
 
@@ -116,7 +218,7 @@ export default function ServiceDetailSection() {
     const ProgressIndicator = ({ currentSection }: { currentSection: number }) => {
         return (
             <div className="flex items-center mb-8 w-full">
-                {[0, 1, 2, 3].map((index) => (
+                {[0, 1, 2].map((index) => (
                     <div key={index} className="flex items-center" style={{ 
                         flex: index === currentSection ? '1' : 'none' 
                     }}>
@@ -129,7 +231,7 @@ export default function ServiceDetailSection() {
                         >
                             [0.{index + 1}]
                         </span>
-                        {index < 3 && (
+                        {index < 2 && (
                             <div 
                                 className={`progress-line h-px ${
                                     index === currentSection 
@@ -178,7 +280,7 @@ export default function ServiceDetailSection() {
                         {/* サービス詳細 - コンテンツ */}
                         <div className="lg:col-span-5 flex flex-col justify-start px-0 md:px-6 lg:px-12 py-8 md:py-12 lg:py-20">
                             {/* サービス詳細 - 説明 */}
-                            <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8 leading-relaxed">
+                            <p className="text-base md:text-lg text-black mb-6 md:mb-8 leading-relaxed">
                                 {section.description}
                             </p>
 
@@ -192,7 +294,7 @@ export default function ServiceDetailSection() {
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                     }`}
                                 >
-                                    VIDEO
+                                    画像
                                 </button>
                                 <button
                                     onClick={() => handleTabChange(sectionIndex, 1)}
@@ -202,30 +304,26 @@ export default function ServiceDetailSection() {
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                     }`}
                                 >
-                                    DETAILS
+                                    詳細
                                 </button>
                             </div>
 
                             {/* サービス詳細 - コンテンツ */}
-                            <div className="bg-gray-50 rounded-lg p-4 md:p-6 lg:p-8 h-64 md:h-80 lg:h-160">
+                            <div className="bg-gray-50 rounded-lg p-4 md:p-6 lg:p-8">
                                 {activeTabs[sectionIndex] === 0 ? (
-                                    <div className="h-full bg-gray-200 rounded-lg flex items-center justify-center">
-                                        <div className="text-center">
-                                            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                                </svg>
-                                            </div>
-                                            <p className="text-gray-500 text-sm md:text-base">{section.videoContent}</p>
-                                        </div>
+                                    <div className="rounded-lg overflow-hidden">
+                                        <img 
+                                            src={section.imageSrc} 
+                                            alt={section.title}
+                                            className="w-full h-auto object-contain"
+                                        />
                                     </div>
                                 ) : (
-                                    <div className="h-full overflow-y-auto">
-                                        <div className="prose prose-sm md:prose-lg max-w-none">
-                                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                                                {section.detailsContent}
-                                            </p>
-                                        </div>
+                                    <div className="min-h-32 overflow-y-auto">
+                                        <div 
+                                            className="text-sm md:text-base"
+                                            dangerouslySetInnerHTML={{ __html: section.detailsContent }}
+                                        />
                                     </div>
                                 )}
                             </div>

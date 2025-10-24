@@ -5,7 +5,7 @@ import TransitionLink from '@/components/ui/TransitionLink'
 export default function NewsSection() {
   const latestNews = getLatestNews(3)
   return (
-    <section className="py-12 md:py-16 bg-white relative z-10">
+    <section className="py-12 md:py-16 bg-gray-100 relative z-10">
       <div className="max-w-[1500px] mx-auto px-4">
         <div className="mb-12 md:mb-16">
           <p className="text-sm lg:text-base text-gray-600">最新の活動と取り組みをお知らせいたします。</p>
