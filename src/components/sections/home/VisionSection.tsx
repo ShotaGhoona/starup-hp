@@ -111,13 +111,13 @@ export default function VisionSection() {
             >
                 <span 
                     ref={line1Ref}
-                    className="block text-2xl lg:text-4xl font-bold text-black leading-tight mb-2"
+                    className="block text-xl md:text-2xl lg:text-4xl font-bold text-black leading-tight mb-2"
                 >
                     Create culture through technology,
                 </span>
                 <span 
                     ref={line2Ref}
-                    className="block text-2xl lg:text-5xl font-bold text-black leading-tight"
+                    className="block text-xl md:text-2xl lg:text-5xl font-bold text-black leading-tight"
                 >
                     Leaving timeless value.
                 </span>

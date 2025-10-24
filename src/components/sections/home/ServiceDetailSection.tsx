@@ -156,7 +156,7 @@ export default function ServiceDetailSection() {
                         ref={el => {
                             sectionRefs.current[sectionIndex] = el
                         }}
-                        className="grid grid-cols-1 lg:grid-cols-8 gap-8 lg:gap-8"
+                        className="grid grid-cols-1 lg:grid-cols-8 gap-2 lg:gap-8 lg:gap-8"
                     >
                         {/* サービス詳細 - Sticky */}
                         <div className="lg:col-span-3 lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-12 md:pt-20">

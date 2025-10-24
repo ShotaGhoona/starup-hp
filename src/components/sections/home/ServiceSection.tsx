@@ -596,74 +596,129 @@ export default function ServiceSection() {
         <section ref={sectionRef} className="relative h-screen bg-black overflow-hidden">
             {/* Three.js Canvas */}
             <div ref={containerRef} className="absolute inset-0" />
-            {/* タイトル - 中央 */}
-            <div 
-                ref={titleRef}
-                className="absolute inset-0 flex items-center justify-center text-white z-20"
-            >
-                <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    Our Service
-                </h1>
+
+            {/* Mobile Layout - 縦並び */}
+            <div className="block lg:hidden absolute inset-0 flex flex-col justify-end items-center text-white z-10 space-y-8 p-4 overflow-y-auto">
+                {/* Core */}
+                <div 
+                    ref={descriptionRef}
+                    className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg"
+                >
+                    <span className="text-xs text-gray-300 leading-relaxed mb-4">Core</span>
+                    <h2 className="text-xl font-bold mb-3 pb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
+                        AI Solution
+                    </h2>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                        中核となるAI技術から、様々なソリューションが生まれます。
+                        革新的なテクノロジーで、ビジネスの可能性を無限に広げます。
+                    </p>
+                </div>
+                <div className="flex flex-col gap-4 w-full">
+                    {/* Service 1 */}
+                    <div ref={service1CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
+                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 1</span>
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-bold text-white">
+                                ARCHAIVE
+                            </h3>
+                            <ViewMoreLink 
+                                href="/services/ai-analytics" 
+                                className="!text-white hover:!text-purple-400"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Service 2 */}
+                    <div ref={service2CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
+                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 2</span>
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-bold text-white">
+                                Send AI
+                            </h3>
+                            <ViewMoreLink 
+                                href="/services/cloud-solutions" 
+                                className="!text-white hover:!text-blue-400"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Service 3 */}
+                    <div ref={service3CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
+                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 3</span>
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-bold text-white">
+                                Othre Products
+                            </h3>
+                            <ViewMoreLink 
+                                href="/services/automation" 
+                                className="!text-white hover:!text-cyan-400"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* 説明文 - 右上 */}
-            <div 
-                ref={descriptionRef}
-                className="absolute top-1/2 -translate-y-1/2 left-1/4 -translate-x-1/2 max-w-md text-white z-10 bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg"
-            >
-                <span className="text-sm text-gray-300 leading-relaxed mb-6">Core</span>
-                <h2 className="text-3xl font-bold mb-4 pb-2  bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
-                    AI Solution
-                </h2>
-                <p className="text-lg text-gray-300 leading-relaxed">
-                    中核となるAI技術から、様々なソリューションが生まれます。
-                    革新的なテクノロジーで、ビジネスの可能性を無限に広げます。
-                </p>
-            </div>
+            {/* Desktop Layout - absolute配置 */}
+            <div className="hidden lg:block">
+                {/* 説明文 - 右上 */}
+                <div 
+                    ref={descriptionRef}
+                    className="absolute top-1/2 -translate-y-1/2 left-1/4 -translate-x-1/2 max-w-md text-white z-10 bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg"
+                >
+                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Core</span>
+                    <h2 className="text-3xl font-bold mb-4 pb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
+                        AI Solution
+                    </h2>
+                    <p className="text-lg text-gray-300 leading-relaxed">
+                        中核となるAI技術から、様々なソリューションが生まれます。
+                        革新的なテクノロジーで、ビジネスの可能性を無限に広げます。
+                    </p>
+                </div>
 
-            {/* AI Analytics */}
-            <div ref={service1CardRef} className="absolute bottom-20 left-1/4 -translate-x-1/2 text-white z-10 max-w-md  bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 1</span>
-                <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                    ARCHAIVE
-                </h3>
-                <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                    データを価値に変える先進的な分析ソリューション。機械学習とAIで深い洞察を提供します。
-                </p>
-                <ViewMoreLink 
-                    href="/services/ai-analytics" 
-                    className="!text-white hover:!text-purple-400"
-                />
-            </div>
+                {/* AI Analytics */}
+                <div ref={service1CardRef} className="absolute bottom-20 left-1/4 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
+                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 1</span>
+                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
+                        ARCHAIVE
+                    </h3>
+                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                        データを価値に変える先進的な分析ソリューション。機械学習とAIで深い洞察を提供します。
+                    </p>
+                    <ViewMoreLink 
+                        href="/services/ai-analytics" 
+                        className="!text-white hover:!text-purple-400"
+                    />
+                </div>
 
-            {/* Cloud Solutions */}
-            <div ref={service2CardRef} className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white z-10 max-w-md  bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 2</span>
-                <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                    Send AI
-                </h3>
-                <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                    スケーラブルで安全なクラウドインフラストラクチャ。最新のクラウド技術で効率化を実現。
-                </p>
-                <ViewMoreLink 
-                    href="/services/cloud-solutions" 
-                    className="!text-white hover:!text-blue-400"
-                />
-            </div>
+                {/* Cloud Solutions */}
+                <div ref={service2CardRef} className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
+                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 2</span>
+                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
+                        Send AI
+                    </h3>
+                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                        スケーラブルで安全なクラウドインフラストラクチャ。最新のクラウド技術で効率化を実現。
+                    </p>
+                    <ViewMoreLink 
+                        href="/services/cloud-solutions" 
+                        className="!text-white hover:!text-blue-400"
+                    />
+                </div>
 
-            {/* Automation */}
-            <div ref={service3CardRef} className="absolute bottom-20 left-3/4 -translate-x-1/2 text-white z-10 max-w-md  bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 3</span>
-                <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                    Othre Products
-                </h3>
-                <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                    業務プロセスを自動化し効率性を最大化。RPAとAIで業務革新を支援します。
-                </p>
-                <ViewMoreLink 
-                    href="/services/automation" 
-                    className="!text-white hover:!text-cyan-400"
-                />
+                {/* Automation */}
+                <div ref={service3CardRef} className="absolute bottom-20 left-3/4 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
+                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 3</span>
+                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
+                        Othre Products
+                    </h3>
+                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                        業務プロセスを自動化し効率性を最大化。RPAとAIで業務革新を支援します。
+                    </p>
+                    <ViewMoreLink 
+                        href="/services/automation" 
+                        className="!text-white hover:!text-cyan-400"
+                    />
+                </div>
             </div>
         </section>
     )
