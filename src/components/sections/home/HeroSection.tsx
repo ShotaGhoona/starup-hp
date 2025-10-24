@@ -5,10 +5,10 @@ export default function HeroSection() {
     return (
         <section className="relative h-screen overflow-hidden" data-bg="dark">
             {/* Background */}
-            <div className="fixed inset-0 -z-1">
+            <div className="fixed inset-0">
                 <NetworkBackground className="w-full h-full"/>
             </div>
-            <div className="max-w-[1500px] mx-auto flex items-end justify-start h-full w-full text-white">
+            <div className="max-w-[1500px] mx-auto flex items-end justify-start h-full w-full text-white relative z-10 pointer-events-none">
                 <div className="flex items-center">
                     <p className="text-8xl font-bold mr-6">STARUP</p>
                     <p className="text-6xl mr-6">with</p>

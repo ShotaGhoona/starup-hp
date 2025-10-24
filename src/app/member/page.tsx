@@ -1,14 +1,14 @@
-import Header2 from "@/components/layout/Header2"
+import Header from "@/components/layout/Header"
 import MemberHeroSection from "@/components/sections/member/MemberHeroSection"
 import MemberListSection from "@/components/sections/member/MemberListSection"
-import Footer2 from "@/components/layout/Footer2"
+import Footer from "@/components/layout/Footer"
 export default function MemberPage() {
   return (
     <div className="relative">
-      <Header2 />
+      <Header />
       <MemberHeroSection />
       <MemberListSection />
-      <Footer2 />
+      <Footer />
     </div>
   );
 }

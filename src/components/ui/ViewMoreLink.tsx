@@ -11,10 +11,20 @@ interface ViewMoreLinkProps {
 const ViewMoreLink: React.FC<ViewMoreLinkProps> = ({ href, className = '' }) => {
   const router = useRouter()
 
+  const handleClick = () => {
+    // トランジションイベントを発火
+    window.dispatchEvent(new CustomEvent('startPageTransition', { detail: { href } }))
+    
+    // 300ms後にナビゲーション
+    setTimeout(() => {
+      router.push(href)
+    }, 300)
+  }
+
   return (
     <div className={`text-right mt-8 ${className}`}>
       <button
-        onClick={() => router.push(href)}
+        onClick={handleClick}
         className="group inline-flex items-center gap-3 text-gray-700 hover:text-[#002AF4] transition-colors duration-200 font-semibold text-lg"
       >
         <span className="relative">
