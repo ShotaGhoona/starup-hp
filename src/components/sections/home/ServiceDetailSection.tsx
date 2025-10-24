@@ -149,17 +149,17 @@ export default function ServiceDetailSection() {
 
     return (
         <div className="min-h-screen bg-white relative z-20">
-            <div className="max-w-[1500px] mx-auto">
+            <div className="max-w-[1500px] mx-auto px-4">
                 {sections.map((section, sectionIndex) => (
                     <div 
                         key={sectionIndex} 
                         ref={el => {
                             sectionRefs.current[sectionIndex] = el
                         }}
-                        className="grid grid-cols-8 gap-8"
+                        className="grid grid-cols-1 lg:grid-cols-8 gap-8 lg:gap-8"
                     >
                         {/* サービス詳細 - Sticky */}
-                        <div className="col-span-3 sticky top-0 h-fit flex flex-col justify-start pt-20 px-4 sm:px-6 lg:px-8">
+                        <div className="lg:col-span-3 lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-12 md:pt-20">
                             <div ref={el => {
                                 progressRefs.current[sectionIndex] = el
                             }}>
@@ -169,24 +169,24 @@ export default function ServiceDetailSection() {
                                 ref={el => {
                                     titleRefs.current[sectionIndex] = el
                                 }}
-                                className="text-5xl font-bold text-black leading-tight"
+                                className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-tight"
                             >
                                 {section.title}
                             </h2>
                         </div>
 
                         {/* サービス詳細 - コンテンツ */}
-                        <div className="col-span-5 flex flex-col justify-start px-12 py-20">
+                        <div className="lg:col-span-5 flex flex-col justify-start px-0 md:px-6 lg:px-12 py-8 md:py-12 lg:py-20">
                             {/* サービス詳細 - 説明 */}
-                            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                            <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8 leading-relaxed">
                                 {section.description}
                             </p>
 
                             {/* サービス詳細 - ボタン */}
-                            <div className="flex mb-8">
+                            <div className="flex mb-6 md:mb-8">
                                 <button
                                     onClick={() => handleTabChange(sectionIndex, 0)}
-                                    className={`px-6 py-2 text-sm font-medium rounded-l-full ${
+                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-l-full ${
                                         activeTabs[sectionIndex] === 0
                                             ? 'bg-black text-white'
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
@@ -196,7 +196,7 @@ export default function ServiceDetailSection() {
                                 </button>
                                 <button
                                     onClick={() => handleTabChange(sectionIndex, 1)}
-                                    className={`px-6 py-2 text-sm font-medium rounded-r-full ${
+                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-r-full ${
                                         activeTabs[sectionIndex] === 1
                                             ? 'bg-black text-white'
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
@@ -207,22 +207,22 @@ export default function ServiceDetailSection() {
                             </div>
 
                             {/* サービス詳細 - コンテンツ */}
-                            <div className="bg-gray-50 rounded-lg p-8 h-160">
+                            <div className="bg-gray-50 rounded-lg p-4 md:p-6 lg:p-8 h-64 md:h-80 lg:h-160">
                                 {activeTabs[sectionIndex] === 0 ? (
                                     <div className="h-full bg-gray-200 rounded-lg flex items-center justify-center">
                                         <div className="text-center">
-                                            <div className="w-16 h-16 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                                                 </svg>
                                             </div>
-                                            <p className="text-gray-500">{section.videoContent}</p>
+                                            <p className="text-gray-500 text-sm md:text-base">{section.videoContent}</p>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className="h-full overflow-y-auto">
-                                        <div className="prose prose-lg max-w-none">
-                                            <p className="text-gray-700 leading-relaxed">
+                                        <div className="prose prose-sm md:prose-lg max-w-none">
+                                            <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                                                 {section.detailsContent}
                                             </p>
                                         </div>

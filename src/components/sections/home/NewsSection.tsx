@@ -5,11 +5,11 @@ import TransitionLink from '@/components/ui/TransitionLink'
 export default function NewsSection() {
   const latestNews = getLatestNews(3)
   return (
-    <section className="py-16 bg-white relative z-10">
+    <section className="py-12 md:py-16 bg-white relative z-10">
       <div className="max-w-[1500px] mx-auto px-4">
-        <div className="mb-16">
+        <div className="mb-12 md:mb-16">
           <p className="text-sm lg:text-base text-gray-600">最新の活動と取り組みをお知らせいたします。</p>
-          <p className="text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
+          <p className="text-2xl md:text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
         </div>
 
         <div className="space-y-0">
@@ -23,7 +23,7 @@ export default function NewsSection() {
         </div>
         
         {/* View All News Link */}
-        <div className="mt-16 flex justify-center">
+        <div className="mt-12 md:mt-16 flex justify-center">
           <TransitionLink 
             href="/news" 
             className="text-sm text-gray-800 hover:text-black transition-colors font-medium flex items-center gap-2 border-b border-gray-300 hover:border-black pb-1"

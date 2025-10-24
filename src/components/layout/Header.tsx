@@ -57,9 +57,15 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
       
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false)
+      // デスクトップのみでヘッダーを隠す
+      if (window.innerWidth >= 768) {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false)
+        } else {
+          setIsVisible(true)
+        }
       } else {
+        // モバイルでは常に表示
         setIsVisible(true)
       }
       

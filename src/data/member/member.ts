@@ -24,16 +24,6 @@ export interface Member {
       socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
     },
     {
-      id: "kokomu-matsuo",
-      name: "松尾心夢",
-      englishName: "Kokomu Matsuo",
-      position: "取締役",
-      description:
-        "京都大学経済学部出身。教育系スタートアップにてCSOや新規事業開発責任者やシステム開発会社でAIを活用した業務改善ツールの開発やプロダクト化を経験したのちに、CEOの緒方と株式会社STAR UPを共同創業する。",
-      image: "/images/member/matsuo-kokomu.png",
-      socialLinks: { twitter: "#", facebook: "#", linkedin: "#" }
-    },
-    {
       id: "takehiro-kikkawa",
       name: "吉川岳宏",
       englishName: "Takehiro Kikkawa",

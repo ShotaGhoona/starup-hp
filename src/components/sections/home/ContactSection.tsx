@@ -108,23 +108,23 @@ export default function ContactSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="contact" className="py-20 bg-white relative z-10" data-bg="light">
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-20">
+    <section ref={sectionRef} id="contact" className="py-12 md:py-20 bg-white relative z-10" data-bg="light">
+      <div className="max-w-[1500px] mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
           {/* Left Section */}
-          <div className="space-y-16">
+          <div className="space-y-12 md:space-y-16">
             {/* Header */}
             <div>
-              <h2 className="text-6xl md:text-7xl font-normal text-gray-900 mb-8">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal text-gray-900 mb-6 md:mb-8">
                 Let's collaborate
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-base md:text-lg">
                 プロジェクトのご相談や質問はお気軽にお声がけください。
               </p>
             </div>
 
             {/* Contact Info */}
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-2 gap-8 md:gap-12">
               <div>
                 <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">
                   Find us
@@ -166,11 +166,11 @@ export default function ContactSection() {
 
           {/* Right Section - Contact Form */}
           <div>
-            <h3 ref={titleRef} className="text-2xl text-gray-600 mb-8">Say hello</h3>
+            <h3 ref={titleRef} className="text-xl md:text-2xl text-gray-600 mb-6 md:mb-8">Say hello</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name and Subject Row */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
                     氏名
@@ -206,7 +206,7 @@ export default function ContactSection() {
               </div>
 
               {/* Company and Email Row */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
                     会社名
@@ -255,12 +255,12 @@ export default function ContactSection() {
               </div>
 
               {/* Submit Button */}
-              <div className="pt-8">
+              <div className="pt-6 md:pt-8">
                 <button
                   type="submit"
                   className="group flex items-center text-gray-900 hover:text-gray-600 transition-colors"
                 >
-                  <span className="text-lg font-medium underline underline-offset-4">送信する</span>
+                  <span className="text-base md:text-lg font-medium underline underline-offset-4">送信する</span>
                   <svg 
                     className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" 
                     fill="none" 

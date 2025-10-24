@@ -71,32 +71,32 @@ export default function InformationSection() {
   ]
 
   return (
-    <section className="py-32 bg-white">
+    <section className="py-16 md:py-32 bg-white">
       <div className="max-w-[1500px] mx-auto px-4">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-12 md:mb-16">
           <p className="text-sm lg:text-base text-gray-600">
             私たちの会社情報をご覧いただけます。
           </p>
-          <p className="text-3xl lg:text-6xl">
+          <p className="text-2xl md:text-3xl lg:text-6xl">
             Discover who we are, what drives our innovation forward, and the vision that shapes our future.
           </p>
         </div>
-        <div className="grid grid-cols-8 gap-32">
-          <div className="col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-8 gap-8 lg:gap-32">
+          <div className="lg:col-span-3">
             <img src="/images/about/company.jpg" alt="company-info" className="w-full object-cover" />
           </div>
-          <div className="space-y-12 col-span-5">
+          <div className="space-y-8 md:space-y-12 lg:col-span-5">
             {companyInfo.map((info, index) => (
-                <div key={index} className="border-b border-gray-200 pb-8">
-                <div className="grid grid-cols-4 gap-8">
-                    <div className="col-span-1">
-                    <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                <div key={index} className="border-b border-gray-200 pb-6 md:pb-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+                    <div className="md:col-span-1">
+                    <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2 md:mb-0">
                         {info.label}
                     </h3>
                     </div>
-                    <div className="col-span-3">
-                    <div className="text-lg text-gray-900 leading-relaxed">
+                    <div className="md:col-span-3">
+                    <div className="text-base md:text-lg text-gray-900 leading-relaxed">
                         {info.value}
                     </div>
                     </div>
