@@ -777,10 +777,14 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
   useEffect(() => {
     if (!mountRef.current) return
 
-    // Scene setup
-    const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x333333, 0.0015)
-    sceneRef.current = scene
+    // ページ遷移後のレンダリングバグを防ぐため300ms遅延
+    const initTimeout = setTimeout(() => {
+      if (!mountRef.current) return
+
+      // Scene setup
+      const scene = new THREE.Scene()
+      scene.fog = new THREE.FogExp2(0x333333, 0.0015)
+      sceneRef.current = scene
 
     const camera = new THREE.PerspectiveCamera(40, mountRef.current.offsetWidth / mountRef.current.offsetHeight, 0.1, 1200)
     camera.position.set(0, 5, 22)
@@ -934,6 +938,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
     animate()
 
     return () => {
+      clearTimeout(initTimeout)
       window.removeEventListener('resize', handleResize)
       renderer.domElement.removeEventListener('click', handleClick)
       renderer.domElement.removeEventListener('touchstart', handleTouchStart)
@@ -958,6 +963,7 @@ export default function NetworkBackground({ className = '' }: NetworkBackgroundP
       }
       renderer.dispose()
     }
+    }, 300) // 300ms遅延
   }, [config, createNetworkVisualization, triggerPulse])
 
   return (
