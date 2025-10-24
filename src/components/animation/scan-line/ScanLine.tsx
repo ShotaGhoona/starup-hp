@@ -15,7 +15,7 @@ const ScanLine: React.FC = () => {
     // Global variables
     let cardStreamController: any = null;
     let particleScanner: any = null;
-    let particleSystem: any = null;
+    const particleSystem: any = null;
 
     // Initialize card stream
     const initCardStream = () => {

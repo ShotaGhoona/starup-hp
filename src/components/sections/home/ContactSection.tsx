@@ -116,7 +116,7 @@ export default function ContactSection() {
             {/* Header */}
             <div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal text-gray-900 mb-6 md:mb-8">
-                Let's collaborate
+                Let&apos;s collaborate
               </h2>
               <p className="text-gray-600 text-base md:text-lg">
                 プロジェクトのご相談や質問はお気軽にお声がけください。

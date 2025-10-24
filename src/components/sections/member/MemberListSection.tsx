@@ -58,7 +58,7 @@ export default function MemberListSection() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal text-gray-900 mb-6 md:mb-8">Our team</h2>
           <p className="text-sm lg:text-base text-gray-600">革新的な発想と確かな技術力を持つメンバーで、未来のテクノロジーを創造しています</p>
           <p className="text-2xl md:text-3xl lg:text-6xl">
-            Where brilliant minds converge to create the future. Meet the architects of tomorrow's technology revolution.
+            Where brilliant minds converge to create the future. Meet the architects of tomorrow&apos;s technology revolution.
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
