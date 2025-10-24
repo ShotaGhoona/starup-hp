@@ -6,7 +6,7 @@ import ServiceDetailSection from "@/components/sections/home/ServiceDetailSectio
 import Footer from "@/components/layout/Footer"
 import ContactSection from "@/components/sections/home/ContactSection"
 import RectuitSection from "@/components/sections/home/RecruitSection"
-import TechSection from "@/components/sections/home/TechSection"
+import MissionSection from "@/components/sections/home/MissionSection"
 import NewsSection from "@/components/sections/home/NewsSection"
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <HeroSection />
       <VisionSection />
-      <TechSection/>
+      <MissionSection/>
       <ServiceSection />
       <ServiceDetailSection />
       <NewsSection />
