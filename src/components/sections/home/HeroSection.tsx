@@ -20,6 +20,7 @@ export default function HeroSection() {
                                 <span className="block h-[60px] md:h-[80px] leading-[60px] md:leading-[80px] text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">AI</span>
                                 <span className="block h-[60px] md:h-[80px] leading-[60px] md:leading-[80px] text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Product</span>
                                 <span className="block h-[60px] md:h-[80px] leading-[60px] md:leading-[80px] text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Design</span>
+                                <span className="block h-[60px] md:h-[80px] leading-[60px] md:leading-[80px] text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">You</span>
                             </div>
                         </div>
                     </div>
@@ -27,14 +28,15 @@ export default function HeroSection() {
 
                 {/* Desktop Layout */}
                 <div className="hidden lg:flex items-center">
-                    <p className="text-6xl xl:text-8xl font-bold mr-6">STARUP</p>
-                    <p className="text-5xl xl:text-6xl mr-6">with</p>
-                    <div className="relative h-[80px] xl:h-[100px] overflow-hidden">
+                    <p className="text-8xl font-bold mr-6">STARUP</p>
+                    <p className="text-6xl mr-6">with</p>
+                    <div className="relative h-[100px] overflow-hidden">
                         <div className="word-carousel">
-                            <span className="block h-[80px] xl:h-[100px] leading-[80px] xl:leading-[100px] text-6xl xl:text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Technology</span>
-                            <span className="block h-[80px] xl:h-[100px] leading-[80px] xl:leading-[100px] text-6xl xl:text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">AI</span>
-                            <span className="block h-[80px] xl:h-[100px] leading-[80px] xl:leading-[100px] text-6xl xl:text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Product</span>
-                            <span className="block h-[80px] xl:h-[100px] leading-[80px] xl:leading-[100px] text-6xl xl:text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Design</span>
+                            <span className="block h-[100px] leading-[100px] text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Technology</span>
+                            <span className="block h-[100px] leading-[100px] text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">AI</span>
+                            <span className="block h-[100px] leading-[100px] text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Product</span>
+                            <span className="block h-[100px] leading-[100px] text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Design</span>
+                            <span className="block h-[100px] leading-[100px] text-8xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">You</span>
                         </div>
                     </div>
                 </div>
@@ -56,15 +58,15 @@ export default function HeroSection() {
                 }
                 
                 @keyframes move {
-                    0%   { transform: translateY(-240px); }
-                    24%  { transform: translateY(-240px); }
-                    25%  { transform: translateY(-160px); }
-                    49%  { transform: translateY(-160px); }
-                    50%  { transform: translateY(-80px); }
-                    74%  { transform: translateY(-80px); }
+                    0%   { transform: translateY(-300px); }
+                    24%  { transform: translateY(-300px); }
+                    25%  { transform: translateY(-200px); }
+                    49%  { transform: translateY(-200px); }
+                    50%  { transform: translateY(-100px); }
+                    74%  { transform: translateY(-100px); }
                     75%  { transform: translateY(0); }
                     99%  { transform: translateY(0); }
-                    100% { transform: translateY(80px); }
+                    100% { transform: translateY(100px); }
                 }
                 
                 @keyframes moveMobile {
