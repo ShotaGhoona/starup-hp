@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getAllNewsPostSlugs, getNewsPostBySlug } from '@/lib/mdx'
-import NewsDetailHeroSection from '@/components/sections/news-detail/NewsDetailHeroSection'
-import NewsDetailContentSection from '@/components/sections/news-detail/NewsDetailContentSection'
+import NewsDetailContentSection from '@/components/sections/news/NewsDetailContentSection'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -25,7 +24,6 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
     return (
       <div className="min-h-screen">
         <Header />
-        <NewsDetailHeroSection post={post} />
         <NewsDetailContentSection post={post} />
         <Footer />
       </div>

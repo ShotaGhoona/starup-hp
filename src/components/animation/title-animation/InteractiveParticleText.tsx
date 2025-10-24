@@ -18,12 +18,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
     const preload = () => {
       const manager = new THREE.LoadingManager()
       
-      manager.onLoad = function() { 
-        new Environment(typo, particle)
-      }
-
       let typo: any = null
-      let particle: THREE.Texture
 
       // Create a simple particle texture programmatically
       const canvas = document.createElement('canvas')
@@ -38,7 +33,11 @@ export default function InteractiveParticleText({ className = '', text }: Intera
       context.fillStyle = gradient
       context.fillRect(0, 0, 64, 64)
       
-      particle = new THREE.CanvasTexture(canvas)
+      const particle = new THREE.CanvasTexture(canvas)
+
+      manager.onLoad = function() { 
+        new Environment(typo, particle)
+      }
 
       const loader = new FontLoader(manager)
       
@@ -264,7 +263,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
             const dz = mz - pz
 
             const mouseDistance = this.distance(mx, my, px, py)
-            let d = (dx = mx - px) * dx + (dy = my - py) * dy
+            const d = (dx = mx - px) * dx + (dy = my - py) * dy
             const f = -this.data.area / d
 
             if (this.buttom) { 
@@ -492,7 +491,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
                 }
               }
             }
-            shapes.push.apply(shapes, holeShapes)
+            shapes.push(...holeShapes)
                         
             for (let x = 0; x < shapes.length; x++) {
               const shape = shapes[x]
@@ -584,7 +583,7 @@ export default function InteractiveParticleText({ className = '', text }: Intera
       document.addEventListener("DOMContentLoaded", preload)
     }
 
-  }, [])
+  }, [text])
 
   return (
     <div 

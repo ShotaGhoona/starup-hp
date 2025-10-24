@@ -1,24 +1,30 @@
-import HeroSection from '@/components/sections/home/HeroSection'
-import VisionSection from '@/components/sections/home/VisionSection'
-import NetworkSection from '@/components/sections/home/NetworkSection'
-import NewsSection from '@/components/sections/home/NewsSection'
-import ServiceSection from '@/components/sections/home/ServiceSection'
-import RecruitSection from '@/components/sections/home/RecruitSection'
-import { StarWarpSpeed } from '@/components/animation/star-warp-speed/StarWarpSpeed'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import Header from "@/components/layout/Header"
+import HeroSection from "@/components/sections/home/HeroSection"
+import VisionSection from "@/components/sections/home/VisionSection"
+import ServiceSection from "@/components/sections/home/ServiceSection"
+import ServiceDetailSection from "@/components/sections/home/ServiceDetailSection"
+import Footer from "@/components/layout/Footer"
+import ContactSection from "@/components/sections/home/ContactSection"
+import RectuitSection from "@/components/sections/home/RecruitSection"
+import MissionSection from "@/components/sections/home/MissionSection"
+import NewsSection from "@/components/sections/home/NewsSection"
 export default function Home() {
   return (
     <div className="relative">
-      <Header />
-      <HeroSection />     
-      <VisionSection />
-      <NetworkSection />
-      <ServiceSection />
-      <NewsSection />
-      <StarWarpSpeed />
-      <RecruitSection />
-      <Footer />
+      <div className="overflow-x-hidden">
+        <Header />
+        <HeroSection />
+        <VisionSection />
+        <MissionSection/>
+        <ServiceSection />
+      </div>
+      <ServiceDetailSection />
+      <div className="overflow-x-hidden">
+        <NewsSection />
+        <RectuitSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </div>
-  );
+  )
 }

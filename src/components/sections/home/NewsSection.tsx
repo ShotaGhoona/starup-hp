@@ -1,51 +1,38 @@
-import { getNewsPostsForHomepage } from '@/lib/mdx'
-import Link from 'next/link'
-import Background from '@/components/layout/Background'
-import ViewMoreLink from '@/components/ui/ViewMoreLink'
+import { getLatestNews } from '@/lib/news'
+import NewsItem from '@/components/ui/NewsItem'
+import TransitionLink from '@/components/ui/TransitionLink'
 
 export default function NewsSection() {
-  const newsData = getNewsPostsForHomepage(3)
-  
+  const latestNews = getLatestNews(3)
   return (
-    <section className="relative py-20 px-8">
-      <Background />
-      
-      <div className="relative max-w-7xl mx-auto">
-        <div className="grid grid-cols-8 gap-12 mb-12">
-          <div className="col-span-2">
-            <h2 className="text-4xl font-bold text-black mb-2">
-              NEWS
-            </h2>
-            <div className="w-16 h-1  bg-gradient-to-r from-[#7A83FA] to-[#002AF4]"></div>
-          </div>
-          
-          <div className="col-span-6">
-            <div className="space-y-0 border-y border-gray-700">
-              {newsData.map((news, index) => (
-                <Link key={news.slug} href={`/news/${news.slug}`}>
-                  <div className={`py-6 hover:bg-gray-50 transition-colors cursor-pointer ${index !== newsData.length - 1 ? 'border-b border-gray-700' : ''}`}>
-                    <div className="flex flex-col gap-3">
-                      <div>
-                        <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-gray-700 border border-gray-300">
-                          {news.category}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-normal text-gray-900 leading-relaxed hover:text-blue-600 transition-colors">
-                          {news.title}
-                        </h3>
-                      </div>
-                      <div>
-                        <time className="text-sm text-gray-500">{news.date}</time>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            
-            <ViewMoreLink href="/news" />
-          </div>
+    <section className="py-12 md:py-16 bg-white relative z-10">
+      <div className="max-w-[1500px] mx-auto px-4">
+        <div className="mb-12 md:mb-16">
+          <p className="text-sm lg:text-base text-gray-600">最新の活動と取り組みをお知らせいたします。</p>
+          <p className="text-2xl md:text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
+        </div>
+
+        <div className="space-y-0">
+          {latestNews.map((item, index) => (
+            <NewsItem 
+              key={item.id} 
+              item={item} 
+              showDivider={index < 2} 
+            />
+          ))}
+        </div>
+        
+        {/* View All News Link */}
+        <div className="mt-12 md:mt-16 flex justify-center">
+          <TransitionLink 
+            href="/news" 
+            className="text-sm text-gray-800 hover:text-black transition-colors font-medium flex items-center gap-2 border-b border-gray-300 hover:border-black pb-1"
+          >
+            View All News
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </TransitionLink>
         </div>
       </div>
     </section>
