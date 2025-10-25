@@ -52,14 +52,12 @@ export default function MemberListSection() {
     };
   }, []);
   return (
-    <section ref={sectionRef} className="py-12 md:py-16 bg-white">
+    <section ref={sectionRef} className="flex flex-col items-center justify-center bg-white py-20 md:py-40">
       <div className="max-w-[1500px] mx-auto px-4">
-        <div className="mb-12 md:mb-16 mt-12 md:mt-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal text-gray-900 mb-6 md:mb-8">Our team</h2>
-          <p className="text-sm lg:text-base text-gray-600">革新的な発想と確かな技術力を持つメンバーで、未来のテクノロジーを創造しています</p>
-          <p className="text-2xl md:text-3xl lg:text-6xl">
-            Where brilliant minds converge to create the future. Meet the architects of tomorrow&apos;s technology revolution.
-          </p>
+        <h2 className="text-4xl md:text-7xl text-gray-900 leading-relaxed">Our Team</h2>
+        <div className="my-6 md:my-8">
+          <p className="text-sm lg:text-base text-gray-600">思革新的な発想と確かな技術力を持つメンバーで、未来のテクノロジーを創造しています</p>
+          <p className="text-2xl md:text-3xl lg:text-6xl">Where brilliant minds converge to create the future. Meet the architects of tomorrow&apos;s technology revolution.</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {memberData.map((member, index) => (

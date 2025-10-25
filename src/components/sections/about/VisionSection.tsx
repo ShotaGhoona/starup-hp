@@ -2,7 +2,7 @@ import ScanLine from "@/components/animation/scan-line/ScanLine"
 
 export default function VisionSection() {
     return (
-    <section className="flex flex-col items-center justify-center bg-gray-100 py-20 md:py-40" data-bg="light">
+    <section className="flex flex-col items-center justify-center bg-gray-100 py-20 md:py-40">
       <div className="max-w-[1500px] mx-auto px-4">
         <h2 className="text-4xl md:text-7xl text-gray-900 leading-relaxed">Our Mission</h2>
         <div className="my-6 md:my-8">
