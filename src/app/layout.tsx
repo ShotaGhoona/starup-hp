@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "STARUP - Transform thought into technology",
     description: "思想をテクノロジーに変え、産業と文化の構造を再構築する。",
-    creator: "@starup_inc",
+    creator: "@starup01",
   },
   robots: {
     index: true,
