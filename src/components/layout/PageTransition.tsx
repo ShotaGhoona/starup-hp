@@ -13,22 +13,28 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const [phase, setPhase] = useState(7) // 初期状態は非表示
   const [displayChildren, setDisplayChildren] = useState(children)
 
+  // /applyページかどうかを判定
+  const isApplyPage = pathname === '/recruit/apply'
+
   useEffect(() => {
     // ページが実際に変わった時の処理（新しいページを表示）
     setDisplayChildren(children)
     setPhase(4) // 画面を覆った状態から開始
-    
+
+    // applyページの場合は長めの待機時間
+    const exitDelay = isApplyPage ? 1000 : 100
+
     // 左に消えていくアニメーション
-    const timer1 = setTimeout(() => setPhase(5), 100)
-    const timer2 = setTimeout(() => setPhase(6), 200) 
-    const timer3 = setTimeout(() => setPhase(7), 300)
-    
+    const timer1 = setTimeout(() => setPhase(5), exitDelay)
+    const timer2 = setTimeout(() => setPhase(6), exitDelay + 100)
+    const timer3 = setTimeout(() => setPhase(7), exitDelay + 200)
+
     return () => {
       clearTimeout(timer1)
       clearTimeout(timer2)
       clearTimeout(timer3)
     }
-  }, [pathname, children])
+  }, [pathname, children, isApplyPage])
 
   useEffect(() => {
     // カスタムイベントでトランジション開始を監視
@@ -79,23 +85,33 @@ export default function PageTransition({ children }: PageTransitionProps) {
         <div className="relative w-screen h-screen bg-gray-100">
           {/* STARUPロゴとテキスト - 常に画面中央 */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex items-center gap-6">
-              {/* ロゴ部分 */}
-              <div className="relative glitch-logo">
-                <Image
-                  src="/icons/starup-logo.svg"
-                  alt="STARUP Logo"
-                  width={60}
-                  height={60}
-                  className="w-[60px] h-[60px]"
-                />
+            {isApplyPage ? (
+              // applyページ専用のテキスト
+              <div className="text-center space-y-4">
+                <h1 className="glitch-text text-4xl md:text-6xl lg:text-7xl" data-text="Ready to Make Impact?">
+                  Ready to Make Impact?
+                </h1>
               </div>
-              
-              {/* テキスト部分 */}
-              <h1 className="glitch-text" data-text="STAR UP">
-                STAR UP
-              </h1>
-            </div>
+            ) : (
+              // 通常のページ遷移
+              <div className="flex items-center gap-6">
+                {/* ロゴ部分 */}
+                <div className="relative glitch-logo">
+                  <Image
+                    src="/icons/starup-logo.svg"
+                    alt="STARUP Logo"
+                    width={60}
+                    height={60}
+                    className="w-[60px] h-[60px]"
+                  />
+                </div>
+
+                {/* テキスト部分 */}
+                <h1 className="glitch-text" data-text="STAR UP">
+                  STAR UP
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </div>

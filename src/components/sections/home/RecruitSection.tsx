@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import TransitionLink from '@/components/ui/TransitionLink'
 
 interface RecruitSectionProps {
   className?: string
@@ -50,10 +51,11 @@ export default function RecruitSection({ className = '' }: RecruitSectionProps) 
                 つくっていきませんか？
               </p>
             </div>
-            
-            <button className="bg-white text-blue-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-sm font-medium hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base">
-              求人を見る
-            </button>
+            <TransitionLink href="/recruit">
+              <button className="bg-white text-blue-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-sm font-medium hover:bg-gray-100 transition-colors duration-200 text-sm sm:text-base">
+                求人を見る
+              </button>
+            </TransitionLink>
           </div>
 
           {/* Right image slideshow */}

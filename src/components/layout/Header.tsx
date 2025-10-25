@@ -1,6 +1,5 @@
 'use client'
 import Image from 'next/image'
-import Link from 'next/link'
 import TransitionLink from '@/components/ui/TransitionLink'
 import { useState, useEffect } from 'react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -88,10 +87,10 @@ const Header = () => {
     }
   }, [lastScrollY])
   const navItems = [
-    { label: 'ニュース', href: '/news' },
-    { label: '会社概要', href: '/about' },
-    { label: 'メンバー', href: '/member' },
-    { label: 'お問い合わせ', href: '/#contact' },
+    { label: 'News', href: '/news' },
+    { label: 'About', href: '/about' },
+    { label: 'Member', href: '/member' },
+    { label: 'Contact', href: '/#contact' },
   ]
 
   return (
@@ -102,8 +101,8 @@ const Header = () => {
         isDarkBackground ? 'bg-white/10' : 'bg-black/10'
       }`}>
         {/* ロゴとパンくずリスト */}
-        <div className="flex items-center space-x-2 flex-1">
-          <Link href="/" className="flex-shrink-0">
+        <div className="flex items-end space-x-2 flex-1">
+          <TransitionLink href="/" className="flex-shrink-0">
             <div className="flex items-center space-x-2">
               <Image
                 src={isDarkBackground ? "/icons/starup-logo-white.svg" : "/icons/starup-logo.svg"}
@@ -116,7 +115,7 @@ const Header = () => {
                 isDarkBackground ? 'text-white' : 'text-black'
               }`}>STAR UP</span>
             </div>
-          </Link>
+          </TransitionLink>
           
           {/* パンくずリスト - デスクトップのみ */}
           <div className="hidden md:block">
@@ -131,7 +130,7 @@ const Header = () => {
               <li key={index}>
                 <TransitionLink
                   href={item.href}
-                  className={`font-inter font-normal text-base leading-[170%] tracking-[0.04em] hover:opacity-80 transition-all duration-300 ${
+                  className={`font-inter font-bold text-base leading-[170%] tracking-[0.04em] hover:opacity-80 transition-all duration-300 ${
                     isDarkBackground ? 'text-white' : 'text-black'
                   }`}
                 >

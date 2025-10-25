@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { companySNS } from '@/data/company'
+import Select from '@/components/ui/Select'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -33,6 +34,13 @@ export default function ContactSection() {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }))
   }
 
@@ -191,18 +199,18 @@ export default function ContactSection() {
                   <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
                     件名
                   </label>
-                  <select
+                  <Select
                     name="subject"
                     value={formData.subject}
-                    onChange={handleInputChange}
-                    className="w-full border-0 border-b border-gray-300 bg-transparent py-3 text-gray-400 focus:border-gray-600 focus:outline-none focus:ring-0 appearance-none"
-                  >
-                    <option value="">件名を選択してください</option>
-                    <option value="general">お問い合わせ</option>
-                    <option value="business">ビジネスパートナーシップ</option>
-                    <option value="career">キャリア採用</option>
-                    <option value="support">サポート</option>
-                  </select>
+                    onChange={(value) => handleSelectChange('subject', value)}
+                    options={[
+                      { value: 'general', label: 'お問い合わせ' },
+                      { value: 'business', label: 'ビジネスパートナーシップ' },
+                      { value: 'career', label: 'キャリア採用' },
+                      { value: 'support', label: 'サポート' }
+                    ]}
+                    placeholder="件名を選択してください"
+                  />
                 </div>
               </div>
 
