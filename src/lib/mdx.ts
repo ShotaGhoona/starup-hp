@@ -11,6 +11,7 @@ export interface NewsPost {
   category: string
   summary: string
   content: string
+  image?: string
 }
 
 export function getAllNewsPostSlugs(): string[] {
@@ -34,6 +35,7 @@ export function getNewsPostBySlug(slug: string): NewsPost {
     category: data.category,
     summary: data.summary,
     content,
+    image: data.image,
   }
 }
 

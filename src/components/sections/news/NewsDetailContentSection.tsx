@@ -6,17 +6,12 @@ interface NewsDetailContentSectionProps {
   post: NewsPost
 }
 
-// カテゴリに応じた画像を返す関数
-function getNewsImage(category: string): string {
-  const imageMap: { [key: string]: string } = {
-    'プレスリリース': 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1500&h=700&fit=crop',
-    '事業提携': 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1500&h=700&fit=crop',
-    '会社情報': 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1500&h=700&fit=crop',
-    'サービス情報': 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=1500&h=700&fit=crop',
-    '開発情報': 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1500&h=700&fit=crop',
-  }
-  
-  return imageMap[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1500&h=700&fit=crop'
+// デフォルト画像パス
+const DEFAULT_NEWS_IMAGE = '/images/news/news-detail/s-1470x816_v-fms_webp_033766ae-ae48-42b4-8f69-9d944c37b6f2.webp'
+
+// 画像を返す関数（画像が指定されていない場合はデフォルトを使用）
+function getNewsImage(customImage?: string): string {
+  return customImage || DEFAULT_NEWS_IMAGE
 }
 
 export default function NewsDetailContentSection({ post }: NewsDetailContentSectionProps) {
@@ -130,7 +125,7 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
       {/* 中部: 画像が横幅いっぱい */}
       <section className="w-full px-4 max-w-[1500px] mx-auto">
         <img
-          src={getNewsImage(post.category)}
+          src={getNewsImage(post.image)}
           alt={post.title}
           className="w-full h-48 md:h-96 lg:h-[700px] object-cover"
         />
