@@ -69,8 +69,7 @@ const ScanLine: React.FC = () => {
           document.addEventListener("touchmove", (e: TouchEvent) => this.onDrag(e.touches[0]), { passive: false });
           document.addEventListener("touchend", () => this.endDrag());
 
-          // Wheel and other events
-          this.cardLine.addEventListener("wheel", (e: WheelEvent) => this.onWheel(e));
+          // Other events
           this.cardLine.addEventListener("selectstart", (e: Event) => e.preventDefault());
           this.cardLine.addEventListener("dragstart", (e: Event) => e.preventDefault());
 
@@ -132,16 +131,6 @@ const ScanLine: React.FC = () => {
 
           document.body.style.userSelect = "";
           document.body.style.cursor = "";
-        },
-
-        onWheel(e: WheelEvent) {
-          e.preventDefault();
-          const scrollSpeed = 20;
-          const delta = e.deltaY > 0 ? scrollSpeed : -scrollSpeed;
-
-          this.position += delta;
-          this.updateCardPosition();
-          this.updateCardClipping();
         },
 
         animate() {

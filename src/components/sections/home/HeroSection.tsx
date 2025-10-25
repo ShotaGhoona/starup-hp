@@ -11,6 +11,8 @@ export default function HeroSection() {
             <div className="max-w-[1500px] mx-auto flex items-end justify-start h-full w-full text-white relative z-10 pointer-events-none px-4">
                 {/* Mobile Layout */}
                 <div className="block lg:hidden w-full pb-20 pt-16">
+                    <div className="absolute bottom-0 right-0 w-full h-[50vh]">
+                    </div>
                     <div className="flex flex-col space-y-4">
                         <p className="text-4xl md:text-5xl font-bold">STARUP</p>
                         <p className="text-3xl md:text-4xl">with</p>
