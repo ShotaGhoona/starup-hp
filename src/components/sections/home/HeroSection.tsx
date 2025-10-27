@@ -8,6 +8,11 @@ export default function HeroSection() {
             <div className="fixed inset-0">
                 <NetworkBackground className="w-full h-full"/>
             </div>
+
+            {/* 下半分のタッチイベントをブロックするオーバーレイ */}
+            <div className="fixed inset-0 top-1/2 pointer-events-auto z-[5]"
+                 style={{ touchAction: 'pan-y' }} />
+
             <div className="max-w-[1500px] mx-auto flex items-end justify-start h-full w-full text-white relative z-10 pointer-events-none px-4">
                 {/* Mobile Layout */}
                 <div className="block lg:hidden w-full pb-20 pt-16">

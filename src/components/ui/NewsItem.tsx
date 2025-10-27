@@ -25,11 +25,11 @@ export default function NewsItem({ item, showDivider = false }: NewsItemProps) {
           </h3>
 
           {/* Image */}
-          <div className="w-full">
+          <div className="w-full aspect-[16/9] overflow-hidden">
             <img
               src={item.imageUrl}
               alt={item.title}
-              className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
             />
           </div>
 
@@ -55,7 +55,7 @@ export default function NewsItem({ item, showDivider = false }: NewsItemProps) {
             {item.date.replace(/\//g, '.')}
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-2 aspect-[4/3] overflow-hidden">
             <img
               src={item.imageUrl}
               alt={item.title}

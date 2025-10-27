@@ -3,7 +3,7 @@ import NewsItem from '@/components/ui/NewsItem'
 import TransitionLink from '@/components/ui/TransitionLink'
 
 export default function NewsSection() {
-  const latestNews = getLatestNews(3)
+  const latestNews = getLatestNews(4)
   return (
     <section className="py-12 md:py-16 bg-gray-100 relative z-10">
       <div className="max-w-[1500px] mx-auto px-4">
@@ -12,12 +12,19 @@ export default function NewsSection() {
           <p className="text-2xl md:text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
         </div>
 
-        <div className="space-y-0">
-          {latestNews.map((item, index) => (
+        <div className="space-y-0 grid grid-cols-2 gap-4">
+          {latestNews.slice(0, 2).map((item) => (
             <NewsItem 
               key={item.id} 
-              item={item} 
-              showDivider={index < 2} 
+              item={item}
+              showDivider={true}
+            />
+          ))}
+          {latestNews.slice(2, 4).map((item) => (
+            <NewsItem 
+              key={item.id} 
+              item={item}
+              showDivider={true}
             />
           ))}
         </div>
