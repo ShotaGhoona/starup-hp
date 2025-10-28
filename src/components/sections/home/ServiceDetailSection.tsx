@@ -159,7 +159,7 @@ export default function ServiceDetailSection() {
             const title = sections[index].title
 
             const subtitleChars = subtitle.split('').map((char, i) =>
-                `<span class="char" style="opacity: 0; display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
+                `<span class="char text-lg" style="opacity: 0; display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
             ).join('')
 
             const titleChars = title.split('').map((char, i) =>

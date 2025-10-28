@@ -36,7 +36,7 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
           </div>
 
           {/* Tags and Read More */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-end whitespace-nowrap">
             <div className="flex flex-wrap gap-2">
               <span className="text-xs text-gray-500 font-medium">
                 #{item.jobType}
@@ -48,7 +48,7 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
                 #{item.employmentType}
               </span>
             </div>
-            <span className="text-xs text-gray-800 group-hover:text-black transition-all duration-300 font-medium flex items-center gap-1">
+            <span className="text-xs text-gray-800 group-hover:text-black transition-all duration-300 font-medium flex items-center gap-1 whitespace-nowrap">
               READ MORE
               <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -80,7 +80,7 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
                 </p>
               )}
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-end whitespace-nowrap">
               <div className="flex flex-wrap gap-2">
                 <span className="text-xs text-gray-500 font-medium">
                   #{item.jobType}
@@ -92,7 +92,7 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
                   #{item.employmentType}
                 </span>
               </div>
-              <span className="text-xs text-gray-800 group-hover:text-black transition-all duration-300 font-medium flex items-center gap-1">
+              <span className="text-xs text-gray-800 group-hover:text-black transition-all duration-300 font-medium flex items-center gap-1 whitespace-nowrap">
                 READ MORE
                 <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

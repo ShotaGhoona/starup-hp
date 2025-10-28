@@ -111,7 +111,7 @@ export default function MemberListSection() {
                       </p>
                       
                       {/* SNS Icons */}
-                      {member.socialLinks && (
+                      {/* {member.socialLinks && (
                         <div className="flex gap-2">
                           {member.socialLinks.twitter && (
                             <a
@@ -144,7 +144,7 @@ export default function MemberListSection() {
                             </a>
                           )}
                         </div>
-                      )}
+                      )} */}
                     </div>
 
                     {/* Name */}
@@ -225,7 +225,7 @@ export default function MemberListSection() {
                       </div>
                       
                       {/* SNS Icons - Top right */}
-                      {member.socialLinks && (
+                      {/* {member.socialLinks && (
                         <div className="flex gap-2">
                           {member.socialLinks.twitter && (
                             <a
@@ -258,7 +258,7 @@ export default function MemberListSection() {
                             </a>
                           )}
                         </div>
-                      )}
+                      )} */}
                     </div>
 
                     {/* Bottom section */}
