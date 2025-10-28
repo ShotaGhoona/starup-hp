@@ -19,12 +19,10 @@ export default function Home() {
         <ServiceSection />
       </div>
       <ServiceDetailSection />
-      <div className="overflow-x-hidden">
-        <NewsSection />
-        <RectuitSection />
-        <ContactSection />
-        <Footer />
-      </div>
+      <NewsSection />
+      {/* <RectuitSection /> */}
+      <ContactSection />
+      <Footer />
     </div>
   )
 }

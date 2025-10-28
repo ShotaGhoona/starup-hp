@@ -3,7 +3,11 @@
 import React, { useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-const ScanLine: React.FC = () => {
+interface ScanLineProps {
+  autoScroll?: boolean;
+}
+
+const ScanLine: React.FC<ScanLineProps> = ({ autoScroll = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardStreamRef = useRef<HTMLDivElement>(null);
   const cardLineRef = useRef<HTMLDivElement>(null);
@@ -31,7 +35,7 @@ const ScanLine: React.FC = () => {
         position: 0,
         velocity: 120,
         direction: -1,
-        isAnimating: true,
+        isAnimating: autoScroll,
         isDragging: false,
         lastTime: 0,
         lastMouseX: 0,
@@ -661,7 +665,7 @@ const ScanLine: React.FC = () => {
     return () => {
       // Cleanup
     };
-  }, []);
+  }, [autoScroll]);
 
   const toggleAnimation = () => {
     if ((window as any).toggleAnimation) {

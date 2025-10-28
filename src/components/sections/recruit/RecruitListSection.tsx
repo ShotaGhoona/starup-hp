@@ -4,6 +4,8 @@ import { useState, useMemo } from 'react'
 import { RecruitListItem } from '@/lib/recruit'
 import RecruitItem from '@/components/ui/RecruitItem'
 import { PhotoGalleryWall } from '@/components/animation/photo-wall/PhotoGalleryWall'
+import Image from 'next/image'
+import TypingText from '@/components/ui/TypingText'
 
 interface RecruitListSectionProps {
   recruits: RecruitListItem[]
@@ -64,14 +66,17 @@ export default function RecruitListSection({ recruits }: RecruitListSectionProps
           <h2 className="text-4xl md:text-7xl text-gray-900 leading-relaxed">Careers</h2>
           <div className="my-6 md:my-8">
             <p className="text-sm lg:text-base text-gray-600">私たちと一緒に未来を創りませんか。</p>
-            <p className="text-3xl lg:text-6xl">Join us to create the future together.</p>
+            <TypingText
+              text="Join us to create the future together."
+              className="text-3xl lg:text-6xl"
+            />
           </div>
         </div>
         {/* 写真と文言セクション */}
         <div className="my-16 md:my-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-4">
           {/* 写真 */}
           <div className="w-full">
-            <img src="/images/about/company.jpg" alt="recruit-list-section" className="w-full h-full object-cover" />
+            <Image src="/images/about/company.jpg" alt="recruit-list-section" width={500} height={500} className="w-full h-full object-cover" />
           </div>
           {/* 文言 */}
           <div className="space-y-6 text-gray-800">

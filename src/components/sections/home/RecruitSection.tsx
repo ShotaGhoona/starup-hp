@@ -25,7 +25,7 @@ export default function RecruitSection({ className = '' }: RecruitSectionProps) 
   }, [images.length])
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center bg-white ${className}`}>
+    <section className={`relative lg:min-h-screen flex items-center justify-center bg-white ${className}`}>
       <div className="absolute inset-0 h-[70vh] w-7xl top-1/2 -translate-y-1/2">
         <img src="/images/recruit/main.jpg" alt="recruit-section-bg" className="w-full h-full object-cover rounded-r-[50px]" />
         <div className="absolute inset-0 rounded-r-[50px]" style={{ background: '#0077B7D6' }}></div>

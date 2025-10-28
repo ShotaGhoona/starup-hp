@@ -2,6 +2,11 @@
 
 import { NewsListItem } from '@/lib/news'
 import TransitionLink from '@/components/ui/TransitionLink'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface NewsItemProps {
   item: NewsListItem
@@ -9,8 +14,35 @@ interface NewsItemProps {
 }
 
 export default function NewsItem({ item, showDivider = false }: NewsItemProps) {
+  const itemRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!itemRef.current) return
+
+    // 初期状態を設定
+    gsap.set(itemRef.current, { opacity: 0, y: 30 })
+
+    // スクロールアニメーション
+    gsap.to(itemRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: itemRef.current,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
   return (
-    <div>
+    <div ref={itemRef}>
       {/* Mobile Layout */}
       <TransitionLink href={`/news/${item.id}`} className="block md:hidden py-6 group cursor-pointer">
         <div className="flex flex-col space-y-4">

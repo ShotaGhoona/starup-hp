@@ -14,7 +14,8 @@ export default function ServiceDetailSection() {
 
     const sections = [
         {
-            title: "STAR UP.AI AI開発プラットフォーム",
+            subtitle: "AI開発プラットフォーム",
+            title: "STAR UP.AI",
             description: "経営、現場、研究の各部門をAIで統合し、データドリブンな意思決定を実現する包括的なAI開発プラットフォームです。",
             imageSrc: "/images/services/ai-solution.jpg",
             detailsContent: `
@@ -56,7 +57,8 @@ export default function ServiceDetailSection() {
             `
         },
         {
-            title: "図面起点のAI管理 ARCHAIVE",
+            subtitle: "図面起点のAI管理",
+            title: "ARCHAIVE",
             description: "社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。",
             imageSrc: "/images/services/archaive.jpg",
             detailsContent: `
@@ -96,7 +98,8 @@ export default function ServiceDetailSection() {
             `
         },
         {
-            title: "サプライチェーン支援AI SEND AI",
+            subtitle: "サプライチェーン支援AI",
+            title: "SEND AI",
             description: "需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。",
             imageSrc: "/images/services/sendai.jpg",
             detailsContent: `
@@ -151,11 +154,22 @@ export default function ServiceDetailSection() {
         titleRefs.current.forEach((titleElement, index) => {
             if (!titleElement || !sectionRefs.current[index] || !progressRefs.current[index]) return
 
-            // タイトルの文字を分割
-            const chars = sections[index].title.split('').map((char, i) => 
+            // subtitleとtitleの文字を分割
+            const subtitle = sections[index].subtitle
+            const title = sections[index].title
+
+            const subtitleChars = subtitle.split('').map((char, i) =>
                 `<span class="char" style="opacity: 0; display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
             ).join('')
-            titleElement.innerHTML = chars
+
+            const titleChars = title.split('').map((char, i) =>
+                `<span class="char" style="opacity: 0; display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`
+            ).join('')
+
+            titleElement.innerHTML = `
+                <div class="subtitle">${subtitleChars}</div>
+                <div class="main-title">${titleChars}</div>
+            `
 
             const charElements = titleElement.querySelectorAll('.char')
             
@@ -258,27 +272,26 @@ export default function ServiceDetailSection() {
                         ref={el => {
                             sectionRefs.current[sectionIndex] = el
                         }}
-                        className="grid grid-cols-1 lg:grid-cols-8 gap-2 lg:gap-8 lg:gap-8"
+                        className="grid grid-cols-1 lg:grid-cols-8 gap-2 lg:gap-8 lg:gap-8  py-8 md:py-12 lg:py-20"
                     >
                         {/* サービス詳細 - Sticky */}
-                        <div className="lg:col-span-3 lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-12 md:pt-20">
+                        <div className="lg:col-span-3 lg:sticky lg:top-20 h-fit flex flex-col justify-start">
                             <div ref={el => {
                                 progressRefs.current[sectionIndex] = el
                             }}>
                                 <ProgressIndicator currentSection={sectionIndex} />
                             </div>
-                            <h2 
+                            <h2
                                 ref={el => {
                                     titleRefs.current[sectionIndex] = el
                                 }}
                                 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-tight"
                             >
-                                {section.title}
                             </h2>
                         </div>
 
                         {/* サービス詳細 - コンテンツ */}
-                        <div className="lg:col-span-5 flex flex-col justify-start px-0 md:px-6 lg:px-12 py-8 md:py-12 lg:py-20">
+                        <div className="lg:col-span-5 flex flex-col justify-start px-0 md:px-6 lg:px-12">
                             {/* サービス詳細 - 説明 */}
                             <p className="text-base md:text-lg text-black mb-6 md:mb-8 leading-relaxed">
                                 {section.description}
@@ -288,23 +301,23 @@ export default function ServiceDetailSection() {
                             <div className="flex mb-6 md:mb-8">
                                 <button
                                     onClick={() => handleTabChange(sectionIndex, 0)}
-                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-l-full ${
+                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-l-lg ${
                                         activeTabs[sectionIndex] === 0
                                             ? 'bg-black text-white'
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                     }`}
                                 >
-                                    画像
+                                    Image
                                 </button>
                                 <button
                                     onClick={() => handleTabChange(sectionIndex, 1)}
-                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-r-full ${
+                                    className={`px-4 md:px-6 py-2 text-sm font-medium rounded-r-lg ${
                                         activeTabs[sectionIndex] === 1
                                             ? 'bg-black text-white'
                                             : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                     }`}
                                 >
-                                    詳細
+                                    Details
                                 </button>
                             </div>
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TypingText from "@/components/ui/TypingText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,7 @@ export default function MemberListSection() {
 
   useEffect(() => {
     const cards = document.querySelectorAll('.member-card');
-    
+
     cards.forEach((card, index) => {
       const image = card.querySelector('.member-image');
       const position = card.querySelector('.member-position');
@@ -52,12 +53,27 @@ export default function MemberListSection() {
     };
   }, []);
   return (
-    <section ref={sectionRef} className="flex flex-col items-center justify-center bg-white py-20 md:py-40">
-      <div className="max-w-[1500px] mx-auto px-4">
+    <>
+      <style jsx global>{`
+        .member-image-inner {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+          transition: clip-path 0.2s ease, filter 0.2s ease;
+          position: relative;
+        }
+
+        .member-card:hover .member-image-inner {
+          clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 10% 100%);
+        }
+      `}</style>
+      <section ref={sectionRef} className="flex flex-col items-center justify-center bg-white py-20 md:py-40">
+        <div className="max-w-[1500px] mx-auto px-4">
         <h2 className="text-4xl md:text-7xl text-gray-900 leading-relaxed">Our Team</h2>
         <div className="my-6 md:my-8">
           <p className="text-sm lg:text-base text-gray-600">思革新的な発想と確かな技術力を持つメンバーで、未来のテクノロジーを創造しています</p>
-          <p className="text-2xl md:text-3xl lg:text-6xl">Where brilliant minds converge to create the future. Meet the architects of tomorrow&apos;s technology revolution.</p>
+          <TypingText
+            text="Where brilliant minds converge to create the future. Meet the architects of tomorrow's technology revolution."
+            className="text-2xl md:text-3xl lg:text-6xl"
+          />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {memberData.map((member, index) => (
@@ -69,19 +85,21 @@ export default function MemberListSection() {
               <div className="block lg:hidden">
                 <div className="flex flex-col space-y-4 p-4">
                   {/* Image */}
-                  <div className="member-image w-full h-64 relative">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400 text-sm">No Image</span>
-                      </div>
-                    )}
+                  <div className="member-image w-full h-64 relative overflow-hidden">
+                    <div className="member-image-inner w-full h-full">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-400 text-sm">No Image</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* Content */}
@@ -166,19 +184,21 @@ export default function MemberListSection() {
               <div className="hidden lg:block h-80">
                 <div className="flex h-full">
                   {/* Left side - Image */}
-                  <div className="member-image aspect-square h-80 w-60 relative mr-4">
-                    {member.image ? (
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400 text-sm">No Image</span>
-                      </div>
-                    )}
+                  <div className="member-image aspect-square h-80 w-60 relative mr-4 overflow-hidden">
+                    <div className="member-image-inner w-full h-full relative">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-400 text-sm">No Image</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* Vertical line */}
@@ -267,5 +287,6 @@ export default function MemberListSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { companySNS } from '@/data/company'
 import Select from '@/components/ui/Select'
+import toast from 'react-hot-toast'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,11 +16,13 @@ export default function ContactSection() {
     email: '',
     message: ''
   })
-  
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const titleRef = useRef<HTMLHeadingElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null)[]>([])
-  
+
   const [typedPlaceholders, setTypedPlaceholders] = useState<string[]>(['', '', '', '', ''])
   
   const originalPlaceholders = [
@@ -44,10 +47,40 @@ export default function ContactSection() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        toast.success('お問い合わせを送信しました。ありがとうございます！')
+        // フォームをリセット
+        setFormData({
+          name: '',
+          company: '',
+          subject: '',
+          email: '',
+          message: '',
+        })
+      } else {
+        toast.error(data.error || '送信に失敗しました。もう一度お試しください。')
+      }
+    } catch (error) {
+      console.error('送信エラー:', error)
+      toast.error('ネットワークエラーが発生しました。もう一度お試しください。')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const typePlaceholder = (index: number, text: string, delay = 0) => {
@@ -267,17 +300,22 @@ export default function ContactSection() {
               <div className="pt-6 md:pt-8">
                 <button
                   type="submit"
-                  className="group flex items-center text-gray-900 hover:text-gray-600 transition-colors"
+                  disabled={isSubmitting}
+                  className="group flex items-center text-gray-900 hover:text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="text-base md:text-lg font-medium underline underline-offset-4">送信する</span>
-                  <svg 
-                    className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <span className="text-base md:text-lg font-medium underline underline-offset-4">
+                    {isSubmitting ? '送信中...' : '送信する'}
+                  </span>
+                  {!isSubmitting && (
+                    <svg
+                      className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  )}
                 </button>
               </div>
             </form>

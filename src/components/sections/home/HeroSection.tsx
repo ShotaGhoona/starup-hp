@@ -10,7 +10,7 @@ export default function HeroSection() {
             </div>
 
             {/* 下半分のタッチイベントをブロックするオーバーレイ */}
-            <div className="fixed inset-0 top-1/2 pointer-events-auto z-[5]"
+            <div className="block lg:hidden fixed inset-0 top-1/2 pointer-events-auto z-[5]"
                  style={{ touchAction: 'pan-y' }} />
 
             <div className="max-w-[1500px] mx-auto flex items-end justify-start h-full w-full text-white relative z-10 pointer-events-none px-4">

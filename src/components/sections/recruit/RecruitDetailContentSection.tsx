@@ -175,9 +175,20 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
                     <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                   </div>
                 </div>
-
                 <div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-4">応募する</h4>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                    選考フロー
+                  </h3>
+                  <ol className="text-gray-600 text-sm space-y-1">
+                    <li>1. 書類選考</li>
+                    <li>2. 一次面談</li>
+                    <li>3. 技術面接</li>
+                    <li>4. 最終面接</li>
+                    <li>5. オファー</li>
+                  </ol>
+                </div>
+
+                <div className="mt-8">
                   <TransitionLink
                     href="/recruit/apply"
                     className="inline-block w-full px-4 py-3 bg-gray-900 text-white text-sm font-medium rounded text-center hover:bg-gray-800 transition-colors"

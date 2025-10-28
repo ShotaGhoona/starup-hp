@@ -1,13 +1,99 @@
+'use client'
+
 import TransitionLink from '@/components/ui/TransitionLink'
 import Image from 'next/image'
 import { companySNS } from '@/data/company'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Footer() {
+  const logoRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLParagraphElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
+
+  useEffect(() => {
+    if (logoRef.current && textRef.current && svgRef.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: logoRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          toggleActions: 'play reset none reset',
+        }
+      })
+
+      // グラデーションの色を取得
+      const gradientStop1 = svgRef.current.querySelector('#logoGradient stop:first-child')
+      const gradientStop2 = svgRef.current.querySelector('#logoGradient stop:last-child')
+
+      tl.fromTo(
+        logoRef.current,
+        {
+          scaleY: 2.4,
+          y: 200,
+          transformOrigin: 'top center',
+        },
+        {
+          scaleY: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+          transformOrigin: 'top center',
+        }
+      )
+
+      tl.fromTo(
+        textRef.current,
+        {
+          opacity: 0,
+          y: 10,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.2'
+      )
+
+      // アニメーション完了後、グラデーションの色を変更
+      if (gradientStop1 && gradientStop2) {
+        tl.to(
+          gradientStop1,
+          {
+            stopColor: '#8B5CF6',
+            duration: 0.8,
+            ease: 'power2.inOut',
+          },
+          '+=0.2'
+        )
+
+        tl.to(
+          gradientStop2,
+          {
+            stopColor: '#06B6D4',
+            duration: 0.8,
+            ease: 'power2.inOut',
+          },
+          '<'
+        )
+      }
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  }, [])
+
   return (
-    <footer className="bg-gray-100 py-12 md:py-16 relative overflow-hidden">
-      <div className="max-w-[1500px] mx-auto px-4">
+    <footer className="bg-gray-100 pt-12 md:pt-16 pb-8 relative overflow-hidden">
+      <div className="max-w-[1500px] mx-auto px-4 pb-16">
         {/* Mobile Layout */}
-        <div className="block md:hidden space-y-8 mb-16">
+        <div className="block md:hidden space-y-8">
           {/* Contact & Career Buttons First */}
           <div className="space-y-4">
             <TransitionLink 
@@ -89,7 +175,7 @@ export default function Footer() {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16 lg:mb-20">
+        <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Explore */}
           <div>
             <h3 className="text-lg font-medium text-gray-500 mb-4">Explore</h3>
@@ -173,19 +259,29 @@ export default function Footer() {
       </div>
       
       {/* Large text logo */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-10 max-w-[1500px] w-full px-4">
-        <div className="flex items-center justify-center gap-2 md:gap-4">
-          <Image
-            src="/icons/starup-logo.svg"
-            alt="Starup Logo"
-            width={120}
-            height={120}
-            className="w-[4rem] h-[4rem] md:w-[8rem] md:h-[8rem] lg:w-[12rem] lg:h-[12rem] xl:w-[16rem] xl:h-[16rem]"
-          />
-          <h1 className="font-black text-gray-900 leading-none tracking-tight whitespace-nowrap" style={{fontSize: 'clamp(4rem, 8vw, 20rem)'}}>
-            STARUP
-          </h1>
+      <div className="w-full max-w-[1500px] mx-auto">
+        <div ref={logoRef} className="flex items-center justify-center gap-2 md:gap-4 w-full h-full">
+          <svg ref={svgRef} id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 289.07 41.84">
+            <defs>
+              <linearGradient id="logoGradient" x1="0" y1="0" x2="289.07" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#000000" />
+                <stop offset="100%" stopColor="#000000" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#logoGradient)" d="M60.39,2.44c-1.88.15-3.88.43-5.96.82,5.05.99,4.95,4.81-.58,9.91C50.76,5.46,43.23,0,34.41,0,22.86,0,13.49,9.37,13.49,20.92c0,2.73.53,5.34,1.48,7.73-.05-.49-.08-.99-.08-1.5,0-8.15,6.61-14.75,14.75-14.75,5.83,0,10.86,3.39,13.25,8.31-8.86,4.84-19.59,8.57-27.38,9.19-6.61.53-9.55-1.29-8.64-4.51-10.92,9.57-8.72,16.21,5.6,15.05,8.93-.72,20.59-4.31,31.37-9.29-1.54,5.46-6.14,9.62-11.83,10.54.78.09,1.58.14,2.39.14,10.02,0,18.39-7.04,20.44-16.45,3.32-1.97,6.38-4.05,9.05-6.16,13.23-10.5,11.66-18.02-3.51-16.79Z"/>
+            <g fill="url(#logoGradient)">
+              <polygon points="151.17 1.41 125.2 1.41 125.2 8.25 135.14 8.25 135.14 40.56 141.24 40.56 141.24 8.25 151.17 8.25 151.17 1.41"/>
+              <path d="M169.14,1.13h-5.49l-13.98,39.43h6.23l3.22-9.32h14.42l3.18,9.32h6.4L169.2,1.32l-.06-.18ZM171.33,24.68h-10l4.98-14.33,5.02,14.33Z"/>
+              <path d="M215.26,13.98v-.11c0-3.36-.92-6.3-2.66-8.5-2.15-2.59-5.35-3.96-9.25-3.96h-14.24v39.15h6.06v-13.46h6.45l7.62,13.32.08.14h7.17l-8.53-14.74c4.71-1.81,7.3-6,7.3-11.83ZM209.12,14.26v.11c0,3.75-2.42,6.18-6.17,6.18h-7.78v-12.41h7.73c4.01,0,6.21,2.17,6.21,6.12Z"/>
+              <path d="M251.21,23.9c0,6.72-2.7,10.42-7.6,10.42s-7.64-3.9-7.64-10.7V1.41h-6.06v22.5c0,10.97,4.96,17.26,13.61,17.26s13.74-6.41,13.74-17.59V1.41h-6.05v22.5Z"/>
+              <path d="M276.89,1.41h-12.48v39.15h5.91v-12.41h5.94c7.78,0,12.8-5.28,12.8-13.46v-.11c0-8.01-4.78-13.18-12.18-13.18ZM270.32,8.14h6.12c4.12,0,6.48,2.41,6.48,6.62v.11c0,3.96-2.6,6.62-6.48,6.62h-6.12v-13.34Z"/>
+              <path d="M107.6,6.71c1.68,0,3.1.45,4.22,1.35,1.13.9,1.94,2.06,2.4,3.45l.09.27,5.87-2.14-.08-.25c-.52-1.66-1.32-3.15-2.39-4.43-1.07-1.33-2.46-2.38-4.11-3.11-1.62-.77-3.55-1.17-5.71-1.17-3.85,0-6.86,1.03-8.94,3.06-2.09,2-3.14,4.84-3.14,8.45,0,1.92.36,3.6,1.08,5.01.75,1.41,1.77,2.59,3.05,3.51,1.29.92,2.75,1.62,4.34,2.1l4.11,1.19c1.67.49,3.02,1.2,4,2.11.97.86,1.44,1.94,1.44,3.32,0,1.52-.56,2.71-1.71,3.64-1.15.93-2.75,1.4-4.74,1.4-1.71-.04-3.17-.54-4.32-1.51-1.16-.97-1.95-2.12-2.35-3.4l-.09-.27-5.96,2.08.06.24c.29,1.14.8,2.27,1.52,3.35.74,1.03,1.68,1.98,2.78,2.83,1.14.85,2.45,1.52,3.9,2,1.49.48,3.14.72,4.91.72,2.61,0,4.86-.49,6.67-1.44,1.86-.96,3.28-2.31,4.22-4.02.94-1.7,1.42-3.68,1.42-5.89,0-2.51-.86-4.84-2.55-6.9-1.69-2.06-4.08-3.53-7.12-4.38l-4.11-1.14c-1.35-.39-2.44-.95-3.22-1.67-.74-.74-1.11-1.79-1.11-3.11,0-1.65.49-2.95,1.44-3.87.99-.92,2.38-1.39,4.11-1.39Z"/>
+            </g>
+          </svg>
         </div>
+      </div>
+      <div className="w-full max-w-[1500px] mx-auto pt-16">
+        <p ref={textRef} className="text-center text-gray-500 text-lg">Ready to make Impact?</p>
       </div>
     </footer>
   )

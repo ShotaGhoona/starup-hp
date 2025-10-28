@@ -1,15 +1,20 @@
 import { getLatestNews } from '@/lib/news'
 import NewsItem from '@/components/ui/NewsItem'
 import TransitionLink from '@/components/ui/TransitionLink'
+import TypingText from '@/components/ui/TypingText'
 
 export default function NewsSection() {
   const latestNews = getLatestNews(4)
+
   return (
     <section className="py-12 md:py-16 bg-gray-100 relative z-10">
       <div className="max-w-[1500px] mx-auto px-4">
         <div className="mb-12 md:mb-16">
           <p className="text-sm lg:text-base text-gray-600">最新の活動と取り組みをお知らせいたします。</p>
-          <p className="text-2xl md:text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
+          <TypingText
+            text="Stay updated with our latest news and innovations shaping the future."
+            className="text-2xl md:text-3xl lg:text-6xl"
+          />
         </div>
 
         <div className="space-y-0 grid grid-cols-1 lg:grid-cols-2 gap-4">

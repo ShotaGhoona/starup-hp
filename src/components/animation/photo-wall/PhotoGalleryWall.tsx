@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import Image from 'next/image';
 
 const NUM_ROWS = 3;
 const NUM_LOCAL_IMAGES = 23; // Number of actual images in picture-wall folder
@@ -179,13 +180,16 @@ export const PhotoGalleryWall: React.FC = () => {
                             transformStyle: 'preserve-3d',
                           }}
                         >
-                          <img
+                          <Image
                             src={image.url}
                             alt={`Gallery ${imgIndex}`}
+                            width={300}
+                            height={250}
                             className="h-full m-[5px] grayscale group-hover:grayscale-0 transition-all duration-500"
                             style={{
                               transform: 'translateZ(0px)',
                               transition: 'all 0.5s ease',
+                              objectFit: 'cover',
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.transform = 'translateZ(50px)';
@@ -193,6 +197,7 @@ export const PhotoGalleryWall: React.FC = () => {
                             onMouseLeave={(e) => {
                               e.currentTarget.style.transform = 'translateZ(0px)';
                             }}
+                            priority={rowIndex === 0 && imgIndex < 5}
                           />
                           <div
                             className="absolute h-full opacity-25 pointer-events-none"
@@ -200,25 +205,33 @@ export const PhotoGalleryWall: React.FC = () => {
                               transform: 'rotateX(180deg) translateY(-10px)',
                             }}
                           >
-                            <img
+                            <Image
                               src={image.url}
                               alt={`Reflection ${imgIndex}`}
+                              width={300}
+                              height={250}
                               className="h-full m-[5px] grayscale group-hover:grayscale-0 transition-all duration-500"
+                              style={{
+                                objectFit: 'cover',
+                              }}
                             />
                           </div>
                         </div>
                       );
                     } else {
                       return (
-                        <img
+                        <Image
                           key={`${setIndex}-${imgIndex}`}
                           src={image.url}
                           alt={`Gallery ${imgIndex}`}
+                          width={300}
+                          height={250}
                           className="h-full m-[5px] grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer"
                           style={{
                             transform: 'translateZ(0px)',
                             transition: 'all 0.5s ease',
                             transformStyle: 'preserve-3d',
+                            objectFit: 'cover',
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.transform = 'translateZ(50px)';
@@ -226,6 +239,7 @@ export const PhotoGalleryWall: React.FC = () => {
                           onMouseLeave={(e) => {
                             e.currentTarget.style.transform = 'translateZ(0px)';
                           }}
+                          priority={rowIndex === 0 && imgIndex < 5}
                         />
                       );
                     }

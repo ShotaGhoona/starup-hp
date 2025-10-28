@@ -91,7 +91,7 @@ const Header = () => {
     { label: 'About', href: '/about' },
     { label: 'Member', href: '/member' },
     { label: 'Career', href: '/recruit' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   return (
