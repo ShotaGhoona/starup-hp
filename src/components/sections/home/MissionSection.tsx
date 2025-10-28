@@ -40,7 +40,7 @@ export default function MissionSection() {
                 })
                 // その後、中間の期間で横スクロール（60%の期間で高速化）
                 .to(cardStream, {
-                    x: -1000,
+                    x: -5000,
                     duration: 1.5,
                     ease: "none"
                 })

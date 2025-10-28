@@ -519,14 +519,12 @@ export default function ServiceSection() {
             }
         })
 
-        // 0-30%: 何も表示しない（空の状態）
-        
-        // 30%: 説明文を表示し、カメラを左に向ける
+        // 0%: 説明文を表示し、カメラを左に向ける
         tl.to(description, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.3)
+        }, 0)
         .to(cameraTarget, {
             x: -3,
             duration: 0.2,
@@ -536,24 +534,24 @@ export default function ServiceSection() {
                     cameraRef.current.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z)
                 }
             }
-        }, 0.3)
+        }, 0)
 
-        // 70%: サービスカードを順番に表示し、カメラを少し下に向ける、粒子の色を変化
+        // 40%: サービスカードを順番に表示し、カメラを少し下に向ける、粒子の色を変化
         tl.to(service1Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.7)
+        }, 0.4)
         .to(service2Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.72) // 0.02秒遅れ
+        }, 0.42)
         .to(service3Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.74) // 0.04秒遅れ
+        }, 0.44)
         .to(cameraTarget, {
             y: -1,
             duration: 0.2,
@@ -563,7 +561,7 @@ export default function ServiceSection() {
                     cameraRef.current.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z)
                 }
             }
-        }, 0.7)
+        }, 0.4)
         .call(() => {
             // 粒子の色を白から青・紫に変化させる
             particleMeshesRef.current.forEach(particleObject => {
@@ -571,7 +569,7 @@ export default function ServiceSection() {
                 const geometry = particles.geometry as THREE.BufferGeometry
                 const colors = geometry.attributes.color.array as Float32Array
                 const finalColors = geometry.userData.finalColors as Float32Array
-                
+
                 if (finalColors) {
                     // GSAPで色をアニメーション
                     gsap.to(colors, {
@@ -588,7 +586,7 @@ export default function ServiceSection() {
                     })
                 }
             })
-        }, [], 0.7)
+        }, [], 0.4)
 
         return () => {
             ScrollTrigger.getAll().forEach(st => st.kill())

@@ -200,7 +200,7 @@ export default function ContactSection() {
                   Kyoto, Japan
                 </h3>
                 <p className="text-gray-400 text-sm">
-                  hello@starup01.jp
+                  infor@starup01.jp
                 </p>
               </div>
             </div>
