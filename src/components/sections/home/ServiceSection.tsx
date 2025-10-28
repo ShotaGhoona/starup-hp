@@ -607,11 +607,10 @@ export default function ServiceSection() {
                 >
                     <span className="text-xs text-gray-300 leading-relaxed mb-4">Core</span>
                     <h2 className="text-xl font-bold mb-3 pb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
-                        AI Solution
+                        STAR UP.AI
                     </h2>
                     <p className="text-sm text-gray-300 leading-relaxed">
-                        中核となるAI技術から、様々なソリューションが生まれます。
-                        革新的なテクノロジーで、ビジネスの可能性を無限に広げます。
+                        経営、現場、研究の各部門をAIで統合し、データドリブンな意思決定を実現する包括的なAI開発プラットフォームです。
                     </p>
                 </div>
                 <div className="flex flex-col gap-4 w-full">
@@ -668,11 +667,10 @@ export default function ServiceSection() {
                 >
                     <span className="text-sm text-gray-300 leading-relaxed mb-6">Core</span>
                     <h2 className="text-3xl font-bold mb-4 pb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
-                        AI Solution
+                        STAR UP.AI
                     </h2>
                     <p className="text-lg text-gray-300 leading-relaxed">
-                        中核となるAI技術から、様々なソリューションが生まれます。
-                        革新的なテクノロジーで、ビジネスの可能性を無限に広げます。
+                        経営、現場、研究の各部門をAIで統合し、データドリブンな意思決定を実現する包括的なAI開発プラットフォームです。
                     </p>
                 </div>
 
@@ -683,7 +681,7 @@ export default function ServiceSection() {
                         ARCHAIVE
                     </h3>
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        データを価値に変える先進的な分析ソリューション。機械学習とAIで深い洞察を提供します。
+                        社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。
                     </p>
                     <ViewMoreLink 
                         href="/services/ai-analytics" 
@@ -698,7 +696,7 @@ export default function ServiceSection() {
                         Send AI
                     </h3>
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        スケーラブルで安全なクラウドインフラストラクチャ。最新のクラウド技術で効率化を実現。
+                        需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。
                     </p>
                     <ViewMoreLink 
                         href="/services/cloud-solutions" 
@@ -713,7 +711,7 @@ export default function ServiceSection() {
                         Othre Products
                     </h3>
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        業務プロセスを自動化し効率性を最大化。RPAとAIで業務革新を支援します。
+                        様々な業界に対応したAIソリューションを提供。お客様のニーズに合わせたカスタマイズ開発も承ります。
                     </p>
                     <ViewMoreLink 
                         href="/services/automation" 
