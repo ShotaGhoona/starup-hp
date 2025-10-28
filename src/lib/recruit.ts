@@ -1,17 +1,29 @@
 import { getAllRecruitPosts } from './mdx'
 
-// カテゴリに応じた画像を返す関数
-function getRecruitImage(category: string): string {
-  const imageMap: { [key: string]: string } = {
-    'エンジニア': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop',
-    'デザイナー': 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop',
-    'ビジネス': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop',
-    'コーポレート': 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop',
-    'マーケティング': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-    'セールス': 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop',
+// カテゴリとジョブタイプに応じた画像を返す関数
+function getRecruitImage(category: string, jobType?: string): string {
+  // jobTypeベースで画像を判定
+  const jobTypeImageMap: { [key: string]: string } = {
+    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
+    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
+    'プロジェクトマネージャー': '/images/recruit/rectuit-detail/business.jpg',
+    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
   }
 
-  return imageMap[category] || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop'
+  // categoryベースで画像を判定（フォールバック）
+  const categoryImageMap: { [key: string]: string } = {
+    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
+    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
+    'ビジネス': '/images/recruit/rectuit-detail/business.jpg',
+    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
+  }
+
+  // jobTypeがある場合は優先
+  if (jobType && jobTypeImageMap[jobType]) {
+    return jobTypeImageMap[jobType]
+  }
+
+  return categoryImageMap[category] || '/images/recruit/rectuit-detail/business.jpg'
 }
 
 // 採用情報一覧表示用のインターフェース
@@ -36,7 +48,7 @@ export function getAllRecruitsForList(): RecruitListItem[] {
     title: post.title,
     date: post.date,
     category: post.category,
-    imageUrl: getRecruitImage(post.category),
+    imageUrl: getRecruitImage(post.category, post.jobType),
     summary: post.summary,
     jobType: post.jobType,
     location: post.location,

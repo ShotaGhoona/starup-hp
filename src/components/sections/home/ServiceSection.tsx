@@ -503,10 +503,15 @@ export default function ServiceSection() {
         }
 
         // デスクトップ版のアニメーション
-        if (!cameraRef.current) return
+        if (!cameraRef.current || !containerRef.current) return
+
+        const container = containerRef.current
 
         // カメラのlookAt用のダミーオブジェクト
         const cameraTarget = { x: 0, y: 0, z: 0 }
+
+        // コンテナサイズ制御用のオブジェクト
+        const containerSize = { width: 80, height: 80 } // vw, vh
 
         // タイムラインを使って3段階のシンプルなアニメーション
         const tl = gsap.timeline({
@@ -519,12 +524,33 @@ export default function ServiceSection() {
             }
         })
 
-        // 0%: 説明文を表示し、カメラを左に向ける
+        // 0-10%: コンテナ拡大 (80vw x 80vh → 100vw x 100vh)
+        tl.to(containerSize, {
+            width: 100,
+            height: 100,
+            duration: 0.1,
+            ease: "power2.out",
+            onUpdate: () => {
+                container.style.width = `${containerSize.width}vw`
+                container.style.height = `${containerSize.height}vh`
+                // レンダラーのリサイズを呼び出す
+                if (rendererRef.current && cameraRef.current && composerRef.current) {
+                    const width = window.innerWidth * (containerSize.width / 100)
+                    const height = window.innerHeight * (containerSize.height / 100)
+                    cameraRef.current.aspect = width / height
+                    cameraRef.current.updateProjectionMatrix()
+                    rendererRef.current.setSize(width, height)
+                    composerRef.current.setSize(width, height)
+                }
+            }
+        }, 0)
+
+        // 10%: 説明文を表示し、カメラを左に向ける
         tl.to(description, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0)
+        }, 0.1)
         .to(cameraTarget, {
             x: -3,
             duration: 0.2,
@@ -534,24 +560,24 @@ export default function ServiceSection() {
                     cameraRef.current.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z)
                 }
             }
-        }, 0)
+        }, 0.1)
 
-        // 40%: サービスカードを順番に表示し、カメラを少し下に向ける、粒子の色を変化
+        // 50%: サービスカードを順番に表示し、カメラを少し下に向ける、粒子の色を変化
         tl.to(service1Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.4)
+        }, 0.5)
         .to(service2Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.42)
+        }, 0.52)
         .to(service3Card, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.44)
+        }, 0.54)
         .to(cameraTarget, {
             y: -1,
             duration: 0.2,
@@ -561,7 +587,7 @@ export default function ServiceSection() {
                     cameraRef.current.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z)
                 }
             }
-        }, 0.4)
+        }, 0.5)
         .call(() => {
             // 粒子の色を白から青・紫に変化させる
             particleMeshesRef.current.forEach(particleObject => {
@@ -586,7 +612,28 @@ export default function ServiceSection() {
                     })
                 }
             })
-        }, [], 0.4)
+        }, [], 0.5)
+
+        // 80-90%: コンテナ縮小 (100vw x 100vh → 80vw x 80vh)
+        tl.to(containerSize, {
+            width: 80,
+            height: 80,
+            duration: 0.1,
+            ease: "power2.in",
+            onUpdate: () => {
+                container.style.width = `${containerSize.width}vw`
+                container.style.height = `${containerSize.height}vh`
+                // レンダラーのリサイズを呼び出す
+                if (rendererRef.current && cameraRef.current && composerRef.current) {
+                    const width = window.innerWidth * (containerSize.width / 100)
+                    const height = window.innerHeight * (containerSize.height / 100)
+                    cameraRef.current.aspect = width / height
+                    cameraRef.current.updateProjectionMatrix()
+                    rendererRef.current.setSize(width, height)
+                    composerRef.current.setSize(width, height)
+                }
+            }
+        }, 0.8)
 
         return () => {
             ScrollTrigger.getAll().forEach(st => st.kill())
@@ -594,9 +641,9 @@ export default function ServiceSection() {
     }, [])
 
     return (
-        <section ref={sectionRef} className="relative h-screen bg-black overflow-hidden">
+        <section ref={sectionRef} className="hidden lg:block relative h-screen bg-gray-100 overflow-hidden flex items-center justify-center">
             {/* Three.js Canvas */}
-            <div ref={containerRef} className="absolute inset-0" />
+            <div ref={containerRef} className="absolute" style={{ width: '80vw', height: '80vh', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
 
             {/* Mobile Layout - 縦並び */}
             <div className="block lg:hidden absolute inset-0 flex flex-col justify-end items-center text-white z-10 space-y-8 p-4 overflow-y-auto">
@@ -621,10 +668,10 @@ export default function ServiceSection() {
                             <h3 className="text-xl font-bold text-white">
                                 ARCHAIVE
                             </h3>
-                            <ViewMoreLink 
+                            {/* <ViewMoreLink 
                                 href="/services/ai-analytics" 
                                 className="!text-white hover:!text-purple-400"
-                            />
+                            /> */}
                         </div>
                     </div>
 
@@ -635,10 +682,10 @@ export default function ServiceSection() {
                             <h3 className="text-xl font-bold text-white">
                                 Send AI
                             </h3>
-                            <ViewMoreLink 
+                            {/* <ViewMoreLink 
                                 href="/services/cloud-solutions" 
                                 className="!text-white hover:!text-blue-400"
-                            />
+                            /> */}
                         </div>
                     </div>
 
@@ -649,10 +696,10 @@ export default function ServiceSection() {
                             <h3 className="text-xl font-bold text-white">
                                 Othre Products
                             </h3>
-                            <ViewMoreLink 
+                            {/* <ViewMoreLink 
                                 href="/services/automation" 
                                 className="!text-white hover:!text-cyan-400"
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>
@@ -683,10 +730,10 @@ export default function ServiceSection() {
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
                         社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。
                     </p>
-                    <ViewMoreLink 
+                    {/* <ViewMoreLink 
                         href="/services/ai-analytics" 
                         className="!text-white hover:!text-purple-400"
-                    />
+                    /> */}
                 </div>
 
                 {/* Cloud Solutions */}
@@ -698,25 +745,25 @@ export default function ServiceSection() {
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
                         需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。
                     </p>
-                    <ViewMoreLink 
+                    {/* <ViewMoreLink 
                         href="/services/cloud-solutions" 
                         className="!text-white hover:!text-blue-400"
-                    />
+                    /> */}
                 </div>
 
                 {/* Automation */}
                 <div ref={service3CardRef} className="absolute bottom-20 left-3/4 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
                     <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 3</span>
                     <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                        Othre Products
+                        Other Products
                     </h3>
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
                         様々な業界に対応したAIソリューションを提供。お客様のニーズに合わせたカスタマイズ開発も承ります。
                     </p>
-                    <ViewMoreLink 
+                    {/* <ViewMoreLink 
                         href="/services/automation" 
                         className="!text-white hover:!text-cyan-400"
-                    />
+                    /> */}
                 </div>
             </div>
         </section>
