@@ -57,7 +57,7 @@ export default function ServiceDetailSection() {
             `
         },
         {
-            subtitle: "AIデータ活用プラット",
+            subtitle: "AIデータ活用プラットフォーム",
             title: "ARCHAIVE",
             description: "社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。",
             imageSrc: "/images/services/archaive.jpg",
