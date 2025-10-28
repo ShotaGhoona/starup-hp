@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Contact & Career Buttons First */}
           <div className="space-y-4">
             <TransitionLink 
-              href="#contact" 
+              href="/contact" 
               className="group flex items-center justify-between bg-orange-500 text-white px-6 py-4 rounded-full hover:bg-orange-600 transition-colors"
             >
               <span className="font-medium">Contact</span>
@@ -24,7 +24,7 @@ export default function Footer() {
             <p className="text-sm text-gray-500">お気軽にご相談ください</p>
 
             <TransitionLink 
-              href="#career" 
+              href="/recruit" 
               className="group flex items-center justify-between bg-gray-800 text-white px-6 py-4 rounded-full hover:bg-gray-900 transition-colors"
             >
               <span className="font-medium">Career</span>
@@ -46,11 +46,17 @@ export default function Footer() {
                 <TransitionLink href="/about" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
                   About
                 </TransitionLink>
-                <TransitionLink href="/service" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                  Service
+                <TransitionLink href="/member" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  Member
                 </TransitionLink>
                 <TransitionLink href="/news" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
                   News
+                </TransitionLink>
+                <TransitionLink href="/recruit" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  Career
+                </TransitionLink>
+                <TransitionLink href="/contact" className="block text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  Contact
                 </TransitionLink>
               </div>
             </div>
@@ -91,11 +97,17 @@ export default function Footer() {
               <TransitionLink href="/about" className="block text-gray-600 hover:text-gray-900 transition-colors">
                 About
               </TransitionLink>
-              <TransitionLink href="/service" className="block text-gray-600 hover:text-gray-900 transition-colors">
-                Service
+              <TransitionLink href="/member" className="block text-gray-600 hover:text-gray-900 transition-colors">
+                Member
               </TransitionLink>
               <TransitionLink href="/news" className="block text-gray-600 hover:text-gray-900 transition-colors">
                 News
+              </TransitionLink>
+              <TransitionLink href="/recruit" className="block text-gray-600 hover:text-gray-900 transition-colors">
+                Career
+              </TransitionLink>
+              <TransitionLink href="/contact" className="block text-gray-600 hover:text-gray-900 transition-colors">
+                Contact
               </TransitionLink>
             </div>
           </div>
@@ -131,7 +143,7 @@ export default function Footer() {
           {/* Contact & Career */}
           <div className="space-y-4">
             <TransitionLink 
-              href="#contact" 
+              href="/contact" 
               className="group flex items-center justify-between bg-orange-500 text-white px-6 py-4 rounded-full hover:bg-orange-600 transition-colors"
             >
               <span className="font-medium">Contact</span>
@@ -144,7 +156,7 @@ export default function Footer() {
             <p className="text-sm text-gray-500">お気軽にご相談ください</p>
 
             <TransitionLink 
-              href="#career" 
+              href="/recruit" 
               className="group flex items-center justify-between bg-gray-800 text-white px-6 py-4 rounded-full hover:bg-gray-900 transition-colors mt-6"
             >
               <span className="font-medium">Career</span>

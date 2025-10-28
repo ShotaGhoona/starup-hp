@@ -12,7 +12,7 @@ export default function NewsSection() {
           <p className="text-2xl md:text-3xl lg:text-6xl">Stay updated with our latest news and innovations shaping the future.</p>
         </div>
 
-        <div className="space-y-0 grid grid-cols-2 gap-4">
+        <div className="space-y-0 grid grid-cols-1 lg:grid-cols-2 gap-4">
           {latestNews.slice(0, 2).map((item) => (
             <NewsItem 
               key={item.id} 
