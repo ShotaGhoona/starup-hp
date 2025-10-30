@@ -43,7 +43,6 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
               <div className="text-sm text-gray-500">
                 {new Date(post.date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' }).replace(/年|月/g, '').toUpperCase()}
               </div>
-              <div className="text-xs text-gray-400">5 MIN</div>
             </div>
             
             {/* Summary */}

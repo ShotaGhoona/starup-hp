@@ -4,12 +4,14 @@ import { useEffect, useRef, useCallback, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import * as THREE from 'three'
-import ViewMoreLink from "../../ui/ViewMoreLink"
+import ServiceCard from "../../ui/ServiceCard"
+import TypingText from "../../ui/TypingText"
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function ServiceSection() {
     const sectionRef = useRef<HTMLElement>(null)
+    const introTextRef = useRef<HTMLDivElement>(null)
     const descriptionRef = useRef<HTMLDivElement>(null)
     const service1CardRef = useRef<HTMLDivElement>(null)
     const service2CardRef = useRef<HTMLDivElement>(null)
@@ -300,27 +302,31 @@ export default function ServiceSection() {
         if (!containerRef.current) return
 
         const initScene = async () => {
+            // Three.jsは常に100vw × 100vhで描画（コンテナがクリッピングマスクになる）
+            const renderWidth = window.innerWidth
+            const renderHeight = window.innerHeight
+
             // Scene setup
             const scene = new THREE.Scene()
             scene.background = new THREE.Color(0x0a0015)
             scene.fog = new THREE.FogExp2(0x1a0033, 0.001)
             sceneRef.current = scene
 
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+            const camera = new THREE.PerspectiveCamera(75, renderWidth / renderHeight, 0.1, 1000)
             camera.position.set(0, 0, 10) // 15から10に変更してカメラを近づける
             camera.lookAt(0, 0, 0) // 初期は中央を向く
             initialCameraPositionRef.current = camera.position.clone()
             cameraRef.current = camera
 
             scene.add(new THREE.AmbientLight(0x330066, 0.2))
-            
+
             const mainLight = new THREE.DirectionalLight(0xffffff, 0.6)
             mainLight.position.set(10, 10, 5)
             scene.add(mainLight)
 
             // Portal lights
             const lightColors = [params.primaryColor, params.secondaryColor, params.accentColor, params.vortexColor]
-            
+
             for (let i = 0; i < 6; i++) {
                 const light = new THREE.PointLight(new THREE.Color(lightColors[i % 4]), 0.8, 20)
                 scene.add(light)
@@ -328,12 +334,19 @@ export default function ServiceSection() {
             }
 
             const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' })
-            renderer.setSize(window.innerWidth, window.innerHeight)
+            renderer.setSize(renderWidth, renderHeight)
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
             renderer.outputColorSpace = THREE.SRGBColorSpace
             renderer.toneMapping = THREE.ACESFilmicToneMapping
             renderer.toneMappingExposure = 1.2
             rendererRef.current = renderer
+
+            // canvasを中央配置してクリッピングが均等になるようにする
+            renderer.domElement.style.position = 'absolute'
+            renderer.domElement.style.left = '50%'
+            renderer.domElement.style.top = '50%'
+            renderer.domElement.style.transform = 'translate(-50%, -50%)'
+
             containerRef.current!.appendChild(renderer.domElement)
 
             // Load post-processing
@@ -355,9 +368,9 @@ export default function ServiceSection() {
             composer.addPass(new RenderPass(scene, camera))
 
             const bloomPass = new UnrealBloomPass(
-                new THREE.Vector2(window.innerWidth, window.innerHeight),
-                params.bloomStrength, 
-                params.bloomRadius, 
+                new THREE.Vector2(renderWidth, renderHeight),
+                params.bloomStrength,
+                params.bloomRadius,
                 params.bloomThreshold
             )
             composer.addPass(bloomPass)
@@ -365,8 +378,8 @@ export default function ServiceSection() {
             const fxaaPass = new ShaderPass(FXAAShader)
             const pixelRatio = renderer.getPixelRatio()
             fxaaPass.material.uniforms['resolution'].value.set(
-                1 / (window.innerWidth * pixelRatio), 
-                1 / (window.innerHeight * pixelRatio)
+                1 / (renderWidth * pixelRatio),
+                1 / (renderHeight * pixelRatio)
             )
             composer.addPass(fxaaPass)
             composerRef.current = composer
@@ -442,15 +455,16 @@ export default function ServiceSection() {
         }
 
         const handleResize = () => {
-            if (!containerRef.current || !cameraRef.current || !rendererRef.current) return
-            
-            const width = containerRef.current.offsetWidth
-            const height = containerRef.current.offsetHeight
-            
+            if (!cameraRef.current || !rendererRef.current) return
+
+            // Three.jsは常にウィンドウ全体のサイズで描画
+            const width = window.innerWidth
+            const height = window.innerHeight
+
             cameraRef.current.aspect = width / height
             cameraRef.current.updateProjectionMatrix()
             rendererRef.current.setSize(width, height)
-            
+
             if (composerRef.current) {
                 composerRef.current.setSize(width, height)
             }
@@ -486,24 +500,18 @@ export default function ServiceSection() {
     // GSAPアニメーション
     useEffect(() => {
         const section = sectionRef.current
+        const introText = introTextRef.current
         const description = descriptionRef.current
         const service1Card = service1CardRef.current
         const service2Card = service2CardRef.current
         const service3Card = service3CardRef.current
 
-        if (!section || !description || !service1Card || !service2Card || !service3Card) return
-
-        // 初期状態設定（全要素を非表示）
-        gsap.set([description, service1Card, service2Card, service3Card], { opacity: 0 })
-
-        // モバイルの場合は静的に表示
-        if (window.innerWidth < 1024) {
-            gsap.set([description, service1Card, service2Card, service3Card], { opacity: 1 })
-            return
-        }
-
-        // デスクトップ版のアニメーション
+        if (!section || !introText || !description || !service1Card || !service2Card || !service3Card) return
         if (!cameraRef.current || !containerRef.current) return
+
+        // 初期状態設定（全要素を非表示、introTextのみ表示）
+        gsap.set([description, service1Card, service2Card, service3Card], { opacity: 0 })
+        gsap.set(introText, { opacity: 1 })
 
         const container = containerRef.current
 
@@ -511,7 +519,7 @@ export default function ServiceSection() {
         const cameraTarget = { x: 0, y: 0, z: 0 }
 
         // コンテナサイズ制御用のオブジェクト
-        const containerSize = { width: 80, height: 80 } // vw, vh
+        const containerSize = { width: 80, height: 50 } // vw, vh
 
         // タイムラインを使って3段階のシンプルなアニメーション
         const tl = gsap.timeline({
@@ -524,33 +532,32 @@ export default function ServiceSection() {
             }
         })
 
-        // 0-10%: コンテナ拡大 (80vw x 80vh → 100vw x 100vh)
+        // 0-15%: コンテナクリッピング拡大 (80vw x 50vh → 100vw x 100vh)
+        // Three.jsのサイズは変わらず、コンテナがクリッピングマスクとして機能
         tl.to(containerSize, {
             width: 100,
             height: 100,
-            duration: 0.1,
+            duration: 0.15,
             ease: "power2.out",
             onUpdate: () => {
                 container.style.width = `${containerSize.width}vw`
                 container.style.height = `${containerSize.height}vh`
-                // レンダラーのリサイズを呼び出す
-                if (rendererRef.current && cameraRef.current && composerRef.current) {
-                    const width = window.innerWidth * (containerSize.width / 100)
-                    const height = window.innerHeight * (containerSize.height / 100)
-                    cameraRef.current.aspect = width / height
-                    cameraRef.current.updateProjectionMatrix()
-                    rendererRef.current.setSize(width, height)
-                    composerRef.current.setSize(width, height)
-                }
             }
         }, 0)
 
-        // 10%: 説明文を表示し、カメラを左に向ける
+        // 0-15%: introTextをフェードアウト
+        tl.to(introText, {
+            opacity: 0,
+            duration: 0.15,
+            ease: "power2.out"
+        }, 0)
+
+        // 15%: 説明文を表示し、カメラを左に向ける
         tl.to(description, {
             opacity: 1,
             duration: 0.2,
             ease: "power2.out"
-        }, 0.1)
+        }, 0.15)
         .to(cameraTarget, {
             x: -3,
             duration: 0.2,
@@ -560,7 +567,7 @@ export default function ServiceSection() {
                     cameraRef.current.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z)
                 }
             }
-        }, 0.1)
+        }, 0.15)
 
         // 50%: サービスカードを順番に表示し、カメラを少し下に向ける、粒子の色を変化
         tl.to(service1Card, {
@@ -614,24 +621,16 @@ export default function ServiceSection() {
             })
         }, [], 0.5)
 
-        // 80-90%: コンテナ縮小 (100vw x 100vh → 80vw x 80vh)
+        // 80-95%: コンテナクリッピング縮小 (100vw x 100vh → 80vw x 80vh)
+        // Three.jsのサイズは変わらず、コンテナがクリッピングマスクとして機能
         tl.to(containerSize, {
             width: 80,
             height: 80,
-            duration: 0.1,
+            duration: 0.15,
             ease: "power2.in",
             onUpdate: () => {
                 container.style.width = `${containerSize.width}vw`
                 container.style.height = `${containerSize.height}vh`
-                // レンダラーのリサイズを呼び出す
-                if (rendererRef.current && cameraRef.current && composerRef.current) {
-                    const width = window.innerWidth * (containerSize.width / 100)
-                    const height = window.innerHeight * (containerSize.height / 100)
-                    cameraRef.current.aspect = width / height
-                    cameraRef.current.updateProjectionMatrix()
-                    rendererRef.current.setSize(width, height)
-                    composerRef.current.setSize(width, height)
-                }
             }
         }, 0.8)
 
@@ -642,65 +641,15 @@ export default function ServiceSection() {
 
     return (
         <section ref={sectionRef} className="hidden lg:block relative h-screen bg-gray-100 overflow-hidden flex items-center justify-center">
-            {/* Three.js Canvas */}
-            <div ref={containerRef} className="absolute" style={{ width: '80vw', height: '80vh', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
+            <div ref={containerRef} className="absolute overflow-hidden" style={{ width: '80vw', height: '50vh', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
 
-            {/* Mobile Layout - 縦並び */}
-            <div className="block lg:hidden absolute inset-0 flex flex-col justify-end items-center text-white z-10 space-y-8 p-4 overflow-y-auto">
-                {/* Core */}
-                <div 
-                    ref={descriptionRef}
-                    className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg"
-                >
-                    <span className="text-xs text-gray-300 leading-relaxed mb-4">Core</span>
-                    <h2 className="text-xl font-bold mb-3 pb-2 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent border-b border-white">
-                        STAR UP.AI
-                    </h2>
-                    <p className="text-sm text-gray-300 leading-relaxed">
-                        経営、現場、研究の各部門をAIで統合し、データドリブンな意思決定を実現する包括的なAI開発プラットフォームです。
-                    </p>
-                </div>
-                <div className="flex flex-col gap-4 w-full">
-                    {/* Service 1 */}
-                    <div ref={service1CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
-                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 1</span>
-                        <div className="flex justify-between items-center">
-                            <h3 className="text-xl font-bold text-white">
-                                ARCHAIVE
-                            </h3>
-                            {/* <ViewMoreLink 
-                                href="/services/ai-analytics" 
-                                className="!text-white hover:!text-purple-400"
-                            /> */}
-                        </div>
-                    </div>
+            {/* Intro Text - 上部 (Desktop only) */}
+            <div className="max-w-[1500px] mx-auto px-4">
 
-                    {/* Service 2 */}
-                    <div ref={service2CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
-                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 2</span>
-                        <div className="flex justify-between items-center">
-                            <h3 className="text-xl font-bold text-white">
-                                Send AI
-                            </h3>
-                            {/* <ViewMoreLink 
-                                href="/services/cloud-solutions" 
-                                className="!text-white hover:!text-blue-400"
-                            /> */}
-                        </div>
-                    </div>
-
-                    {/* Service 3 */}
-                    <div ref={service3CardRef} className="w-full text-white bg-blur-sm backdrop-blur-sm bg-opacity-50 p-3 rounded-lg">
-                        <span className="text-xs text-gray-300 leading-relaxed mb-4">Service 3</span>
-                        <div className="flex justify-between items-center">
-                            <h3 className="text-xl font-bold text-white">
-                                Othre Products
-                            </h3>
-                            {/* <ViewMoreLink 
-                                href="/services/automation" 
-                                className="!text-white hover:!text-cyan-400"
-                            /> */}
-                        </div>
+                <div ref={introTextRef} className="">
+                    <div className="my-6 md:my-8">
+                        <p className="text-sm lg:text-base text-gray-600">深く、強固な核を持つ。そこから無限のイノベーションが連鎖する。</p>
+                        <p className="text-3xl lg:text-6xl">Deep and powerful at the core. From here, innovation cascades infinitely.</p>
                     </div>
                 </div>
             </div>
@@ -721,50 +670,29 @@ export default function ServiceSection() {
                     </p>
                 </div>
 
-                {/* AI Analytics */}
-                <div ref={service1CardRef} className="absolute bottom-20 left-1/4 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 1</span>
-                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                        ARCHAIVE
-                    </h3>
-                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。
-                    </p>
-                    {/* <ViewMoreLink 
-                        href="/services/ai-analytics" 
-                        className="!text-white hover:!text-purple-400"
-                    /> */}
-                </div>
+                <ServiceCard
+                    ref={service1CardRef}
+                    label="Service 1"
+                    title="ARCHAIVE"
+                    description="社内に点在した図面データを一元管理し、AIによる類似図面検索とチャット型データ検索で業務効率を革新します。"
+                    className="absolute bottom-20 left-1/4 -translate-x-1/2 z-10"
+                />
 
-                {/* Cloud Solutions */}
-                <div ref={service2CardRef} className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 2</span>
-                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                        Send AI
-                    </h3>
-                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。
-                    </p>
-                    {/* <ViewMoreLink 
-                        href="/services/cloud-solutions" 
-                        className="!text-white hover:!text-blue-400"
-                    /> */}
-                </div>
+                <ServiceCard
+                    ref={service2CardRef}
+                    label="Service 2"
+                    title="Send AI"
+                    description="需要予測を起点として発注に関わるあらゆる指標を最適化し、在庫管理から売上分析までを統合的に支援します。"
+                    className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10"
+                />
 
-                {/* Automation */}
-                <div ref={service3CardRef} className="absolute bottom-20 left-3/4 -translate-x-1/2 text-white z-10 max-w-md bg-blur-sm backdrop-blur-sm bg-opacity-50 p-4 rounded-lg">
-                    <span className="text-sm text-gray-300 leading-relaxed mb-6">Service 3</span>
-                    <h3 className="text-3xl font-bold mb-4 pb-2 text-white border-b border-white">
-                        Other Products
-                    </h3>
-                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        様々な業界に対応したAIソリューションを提供。お客様のニーズに合わせたカスタマイズ開発も承ります。
-                    </p>
-                    {/* <ViewMoreLink 
-                        href="/services/automation" 
-                        className="!text-white hover:!text-cyan-400"
-                    /> */}
-                </div>
+                <ServiceCard
+                    ref={service3CardRef}
+                    label="Service 3"
+                    title="AI solutions"
+                    description="様々な業界に対応したAIソリューションを提供。お客様のニーズに合わせたカスタマイズ開発も承ります。"
+                    className="absolute bottom-20 left-3/4 -translate-x-1/2 z-10"
+                />
             </div>
         </section>
     )

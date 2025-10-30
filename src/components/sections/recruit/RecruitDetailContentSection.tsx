@@ -39,7 +39,6 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
               <div className="text-sm text-gray-500">
                 {new Date(post.date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' }).replace(/年|月/g, '').toUpperCase()}
               </div>
-              <div className="text-xs text-gray-400">5 MIN</div>
             </div>
 
             {/* Summary */}
@@ -73,7 +72,6 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
                 <div className="text-sm text-gray-500 mb-2">{new Date(post.date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' }).replace(/年|月/g, '').toUpperCase()}</div>
                 <div className="text-xs text-gray-400 mb-1">{new Date(post.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }).toUpperCase()}</div>
                 <div className="text-xs text-gray-400 mb-4">{new Date(post.date).getFullYear()}</div>
-                <div className="text-xs text-gray-400">5 MIN</div>
               </div>
             </div>
           </div>
