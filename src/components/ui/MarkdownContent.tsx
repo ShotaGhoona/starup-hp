@@ -3,6 +3,9 @@
  * Markdownコンテンツを安全にHTMLに変換して表示するコンポーネント
  */
 
+import Image from 'next/image'
+import parse, { Element, domToReact, HTMLReactParserOptions } from 'html-react-parser'
+
 interface MarkdownContentProps {
   content: string
   className?: string
@@ -40,6 +43,11 @@ function convertMarkdownToHtml(markdown: string, variant: 'mobile' | 'desktop' =
     .replace(/^# (.+)$/gm, `<h1 class="${h1Class}">$1</h1>`)
     .replace(/^## (.+)$/gm, `<h2 class="${h2Class}">$1</h2>`)
     .replace(/^### (.+)$/gm, `<h3 class="${h3Class}">$1</h3>`)
+    // 画像 - ![alt](url) 形式（リンクより先に処理）
+    .replace(
+      /!\[([^\]]*)\]\(([^)]+)\)/g,
+      '<img src="$2" alt="$1" class="w-full h-auto my-4 rounded-lg" loading="lazy" />'
+    )
     // 太字（インライン）
     .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold">$1</strong>')
     // リンク - [テキスト](URL) 形式
@@ -73,10 +81,34 @@ export default function MarkdownContent({
 }: MarkdownContentProps) {
   const html = convertMarkdownToHtml(content, variant)
 
+  // HTMLパーサーのオプション: imgタグをNext.js Imageに置き換え
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if (domNode instanceof Element && domNode.name === 'img') {
+        const { src, alt } = domNode.attribs
+
+        if (!src) return null
+
+        return (
+          <div className="relative w-full my-4">
+            <Image
+              src={src}
+              alt={alt || 'image'}
+              width={1200}
+              height={675}
+              className="w-full h-auto rounded-lg"
+              style={{ objectFit: 'cover' }}
+              unoptimized // NotionのURLは外部URLなので最適化をスキップ
+            />
+          </div>
+        )
+      }
+    }
+  }
+
   return (
-    <div
-      className={`leading-relaxed ${className}`}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <div className={`leading-relaxed ${className}`}>
+      {parse(html, options)}
+    </div>
   )
 }
