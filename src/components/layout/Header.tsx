@@ -127,18 +127,23 @@ const Header = () => {
         {/* デスクトップナビゲーション */}
         <nav className="hidden md:flex items-center justify-between ml-8">
           <ul className="flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <TransitionLink
-                  href={item.href}
-                  className={`font-inter font-bold text-base leading-[170%] tracking-[0.04em] hover:opacity-80 transition-all duration-300 ${
-                    isDarkBackground ? 'text-white' : 'text-black'
-                  }`}
-                >
-                  {item.label}
-                </TransitionLink>
-              </li>
-            ))}
+            {navItems.map((item, index) => {
+              const isContact = item.href === '/contact'
+              return (
+                <li key={index}>
+                  <TransitionLink
+                    href={item.href}
+                    className={`font-inter font-bold text-base leading-[170%] tracking-[0.04em] transition-all duration-300 ${
+                      isContact
+                        ? `border border-solid overflow-hidden relative inline-block ${isDarkBackground ? 'text-white border-white' : 'text-black border-black'} px-4 py-2 before:content-[''] before:absolute before:w-[50px] before:h-[155px] before:left-[-75px] before:top-[-50px] before:rotate-[35deg] before:transition-all before:duration-[550ms] before:ease-[cubic-bezier(0.19,1,0.22,1)] before:z-0 hover:before:left-[120%] ${isDarkBackground ? 'before:bg-white' : 'before:bg-black'} before:opacity-20`
+                        : `hover:opacity-80 ${isDarkBackground ? 'text-white' : 'text-black'}`
+                    }`}
+                  >
+                    <span className={isContact ? 'relative z-10' : ''}>{item.label}</span>
+                  </TransitionLink>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
