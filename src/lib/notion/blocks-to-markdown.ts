@@ -29,6 +29,37 @@ export function richTextToPlainText(richTexts: NotionRichText[]): string {
 }
 
 /**
+ * Notionの色をTailwind CSSクラスにマッピング（Notionの淡い色に合わせる）
+ */
+const textColorMap: Record<string, string> = {
+  red: 'text-red-500',
+  pink: 'text-pink-500',
+  purple: 'text-purple-500',
+  blue: 'text-blue-500',
+  green: 'text-green-500',
+  yellow: 'text-yellow-600',
+  orange: 'text-orange-500',
+  brown: 'text-amber-700',
+  gray: 'text-gray-500',
+  default: '',
+}
+
+/**
+ * Notionの背景色をTailwind CSSクラスにマッピング（Notionの淡いマーカーに合わせる）
+ */
+const backgroundColorMap: Record<string, string> = {
+  red_background: 'bg-red-100',
+  pink_background: 'bg-pink-100',
+  purple_background: 'bg-purple-100',
+  blue_background: 'bg-blue-100',
+  green_background: 'bg-green-100',
+  yellow_background: 'bg-yellow-100',
+  orange_background: 'bg-orange-100',
+  brown_background: 'bg-amber-100',
+  gray_background: 'bg-gray-100',
+}
+
+/**
  * Rich TextをMarkdownに変換（装飾を含む）
  *
  * @param richTexts - Notion Rich Text配列
@@ -77,6 +108,32 @@ export function richTextToMarkdown(richTexts: NotionRichText[]): string {
       }
       if (text.annotations.code) {
         content = `\`${content}\``
+      }
+      if (text.annotations.underline) {
+        content = `<u>${content}</u>`
+      }
+
+      // 色とマーカーの処理
+      const color = text.annotations.color || 'default'
+      const classes: string[] = []
+
+      // 背景色（マーカー）の処理
+      if (color.endsWith('_background')) {
+        const bgClass = backgroundColorMap[color]
+        if (bgClass) {
+          classes.push(bgClass)
+        }
+      } else {
+        // テキスト色の処理
+        const textClass = textColorMap[color]
+        if (textClass) {
+          classes.push(textClass)
+        }
+      }
+
+      // 色やマーカーがある場合はspanタグで囲む
+      if (classes.length > 0) {
+        content = `<span class="${classes.join(' ')}">${content}</span>`
       }
 
       return content
