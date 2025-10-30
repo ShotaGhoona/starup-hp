@@ -1,6 +1,6 @@
 'use client'
 
-import { RecruitListItem } from '@/lib/recruit'
+import { RecruitListItem } from '@/types/recruit'
 import TransitionLink from '@/components/ui/TransitionLink'
 
 interface RecruitItemProps {

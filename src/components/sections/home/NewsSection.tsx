@@ -3,8 +3,8 @@ import NewsItem from '@/components/ui/NewsItem'
 import TransitionLink from '@/components/ui/TransitionLink'
 import TypingText from '@/components/ui/TypingText'
 
-export default function NewsSection() {
-  const latestNews = getLatestNews(4)
+export default async function NewsSection() {
+  const latestNews = await getLatestNews(4)
 
   return (
     <section className="py-12 md:py-16 bg-gray-100 relative z-10">

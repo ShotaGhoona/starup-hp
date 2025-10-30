@@ -2,8 +2,8 @@ import { getAllNewsForList } from '@/lib/news'
 import NewsItem from '@/components/ui/NewsItem'
 import TypingText from '@/components/ui/TypingText'
 
-export default function NewsListSection() {
-  const allNews = getAllNewsForList()
+export default async function NewsListSection() {
+  const allNews = await getAllNewsForList()
 
   return (
     <section className="flex flex-col items-center justify-center bg-white py-20 md:py-40">

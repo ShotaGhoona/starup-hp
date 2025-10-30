@@ -1,7 +1,6 @@
 'use client'
 
-import { RecruitPost } from '@/lib/mdx'
-import { RecruitListItem } from '@/lib/recruit'
+import { RecruitPost, RecruitListItem } from '@/types/recruit'
 import RecruitItem from '@/components/ui/RecruitItem'
 import TransitionLink from '@/components/ui/TransitionLink'
 
@@ -10,36 +9,11 @@ interface RecruitDetailContentSectionProps {
   allRecruits: RecruitListItem[]
 }
 
-// カテゴリとジョブタイプに応じた画像を返す関数
-function getRecruitImage(category: string, jobType?: string): string {
-  // jobTypeベースで画像を判定
-  const jobTypeImageMap: { [key: string]: string } = {
-    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
-    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
-    'プロジェクトマネージャー': '/images/recruit/rectuit-detail/business.jpg',
-    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
-  }
-
-  // categoryベースで画像を判定（フォールバック）
-  const categoryImageMap: { [key: string]: string } = {
-    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
-    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
-    'ビジネス': '/images/recruit/rectuit-detail/business.jpg',
-    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
-  }
-
-  // jobTypeがある場合は優先
-  if (jobType && jobTypeImageMap[jobType]) {
-    return jobTypeImageMap[jobType]
-  }
-
-  return categoryImageMap[category] || '/images/recruit/rectuit-detail/business.jpg'
-}
 
 export default function RecruitDetailContentSection({ post, allRecruits }: RecruitDetailContentSectionProps) {
   // 関連求人を取得（同じjobTypeで、現在の求人を除く、最大4件）
   const relatedRecruits = allRecruits
-    .filter(recruit => recruit.jobType === post.jobType && recruit.id !== post.slug)
+    .filter(recruit => recruit.jobType === post.jobType && recruit.id !== post.id)
     .slice(0, 4)
 
   return (
@@ -108,7 +82,7 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
       {/* 中部: 画像が横幅いっぱい */}
       <section className="w-full px-4 max-w-[1500px] mx-auto">
         <img
-          src={getRecruitImage(post.category, post.jobType)}
+          src={post.thumbnail}
           alt={post.title}
           className="w-full h-48 md:h-96 lg:h-[700px] object-cover"
         />

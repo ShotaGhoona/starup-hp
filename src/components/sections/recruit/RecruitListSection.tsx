@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { RecruitListItem } from '@/lib/recruit'
+import { RecruitListItem } from '@/types/recruit'
 import RecruitItem from '@/components/ui/RecruitItem'
 import { PhotoGalleryWall } from '@/components/animation/photo-wall/PhotoGalleryWall'
 import Image from 'next/image'

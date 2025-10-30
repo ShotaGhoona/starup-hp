@@ -1,6 +1,6 @@
 'use client'
 
-import { NewsPost } from '@/lib/mdx'
+import { NewsPost } from '@/types/news'
 
 interface NewsDetailContentSectionProps {
   post: NewsPost
@@ -66,10 +66,14 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
         <div className="max-w-[1500px] mx-auto px-4">
           {/* Mobile Layout */}
           <div className="block lg:hidden space-y-6">
-            {/* Category Tag */}
-            <span className="inline-block text-xs text-gray-500 border border-gray-300 px-3 py-1 rounded">
-              {post.category}
-            </span>
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag, index) => (
+                <span key={index} className="inline-block text-xs text-gray-500 border border-gray-300 px-3 py-1 rounded">
+                  #{tag}
+                </span>
+              ))}
+            </div>
             
             {/* Title */}
             <h1 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
@@ -92,11 +96,15 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
 
           {/* Desktop Layout */}
           <div className="hidden lg:grid grid-cols-12 gap-8">
-            {/* 左上: カテゴリタグ */}
+            {/* 左上: タグ */}
             <div className="col-span-2">
-              <span className="text-xs text-gray-500 border border-gray-300 px-3 py-1 rounded">
-                {post.category}
-              </span>
+              <div className="flex flex-col gap-2">
+                {post.tags.map((tag, index) => (
+                  <span key={index} className="text-xs text-gray-500 border border-gray-300 px-3 py-1 rounded inline-block">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             </div>
             
             {/* 中央: タイトルと説明文 */}
@@ -125,7 +133,7 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
       {/* 中部: 画像が横幅いっぱい */}
       <section className="w-full px-4 max-w-[1500px] mx-auto">
         <img
-          src={getNewsImage(post.image)}
+          src={getNewsImage(post.thumbnail)}
           alt={post.title}
           className="w-full h-48 md:h-96 lg:h-[700px] object-cover"
         />
