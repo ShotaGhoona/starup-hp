@@ -43,7 +43,29 @@ export function richTextToMarkdown(richTexts: NotionRichText[]): string {
     .map((text) => {
       let content = text.plain_text
 
-      // 装飾を適用
+      // リンクがある場合の処理
+      if (text.href) {
+        // リンクテキストとURLが同じ場合は、生のURLのみを表示
+        if (text.plain_text === text.href || text.plain_text.trim() === text.href.trim()) {
+          return `<${text.href}>`
+        }
+        // リンクテキストとURLが異なる場合は、装飾を適用してからMarkdownリンク形式に
+        if (text.annotations.bold) {
+          content = `**${content}**`
+        }
+        if (text.annotations.italic) {
+          content = `*${content}*`
+        }
+        if (text.annotations.strikethrough) {
+          content = `~~${content}~~`
+        }
+        if (text.annotations.code) {
+          content = `\`${content}\``
+        }
+        return `[${content}](${text.href})`
+      }
+
+      // リンクがない場合は通常の装飾を適用
       if (text.annotations.bold) {
         content = `**${content}**`
       }
@@ -55,11 +77,6 @@ export function richTextToMarkdown(richTexts: NotionRichText[]): string {
       }
       if (text.annotations.code) {
         content = `\`${content}\``
-      }
-
-      // リンクを適用
-      if (text.href) {
-        content = `[${content}](${text.href})`
       }
 
       return content

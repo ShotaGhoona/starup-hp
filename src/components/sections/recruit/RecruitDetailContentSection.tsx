@@ -3,6 +3,7 @@
 import { RecruitPost, RecruitListItem } from '@/types/recruit'
 import RecruitItem from '@/components/ui/RecruitItem'
 import TransitionLink from '@/components/ui/TransitionLink'
+import MarkdownContent from '@/components/ui/MarkdownContent'
 
 interface RecruitDetailContentSectionProps {
   post: RecruitPost
@@ -94,21 +95,7 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
           {/* Mobile Layout */}
           <div className="block lg:hidden">
             <div className="max-w-none prose prose-gray">
-              <div
-                className="leading-relaxed"
-                dangerouslySetInnerHTML={{
-                  __html: post.content
-                    .replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold text-gray-900 mt-6 mb-4">$1</h1>')
-                    .replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold text-gray-800 mt-6 mb-3">$1</h2>')
-                    .replace(/^### (.+)$/gm, '<h3 class="text-lg font-medium text-gray-800 mt-4 mb-2">$1</h3>')
-                    .replace(/^\*\*(.+)\*\*$/gm, '<p class="font-semibold text-gray-900 mb-3">$1</p>')
-                    .replace(/^- (.+)$/gm, '<li class="ml-4 mb-2">$1</li>')
-                    .replace(/^(\d+)\. (.+)$/gm, '<li class="ml-4 mb-2 list-decimal">$2</li>')
-                    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 leading-relaxed text-sm">')
-                    .replace(/^(.+)$/gm, '<p class="mb-4 text-gray-600 leading-relaxed text-sm">$1</p>')
-                    .replace(/---/g, '<hr class="my-6 border-gray-300" />')
-                }}
-              />
+              <MarkdownContent content={post.content} variant="mobile" />
             </div>
 
             {/* Mobile Apply Section */}
@@ -129,21 +116,7 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
             <div className="col-span-2"></div>
             <div className="col-span-8 border-r border-gray-700 pr-8">
               <div className="max-w-none prose prose-lg prose-gray">
-                <div
-                  className="leading-relaxed"
-                  dangerouslySetInnerHTML={{
-                    __html: post.content
-                      .replace(/^# (.+)$/gm, '<h1 class="text-3xl font-bold text-gray-900 mt-8 mb-6">$1</h1>')
-                      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">$1</h2>')
-                      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-medium text-gray-800 mt-6 mb-3">$1</h3>')
-                      .replace(/^\*\*(.+)\*\*$/gm, '<p class="font-semibold text-gray-900 mb-4">$1</p>')
-                      .replace(/^- (.+)$/gm, '<li class="ml-4 mb-2">$1</li>')
-                      .replace(/^(\d+)\. (.+)$/gm, '<li class="ml-4 mb-2 list-decimal">$2</li>')
-                      .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 leading-relaxed">')
-                      .replace(/^(.+)$/gm, '<p class="mb-4 text-gray-600 leading-relaxed">$1</p>')
-                      .replace(/---/g, '<hr class="my-8 border-gray-300" />')
-                  }}
-                />
+                <MarkdownContent content={post.content} variant="desktop" />
               </div>
             </div>
 
