@@ -3,6 +3,7 @@
 import { NewsPost } from '@/types/news'
 import MarkdownContent from '@/components/ui/MarkdownContent'
 import ShareButtons from '@/components/ui/ShareButtons'
+import Image from 'next/image'
 
 interface NewsDetailContentSectionProps {
   post: NewsPost
@@ -89,11 +90,17 @@ export default function NewsDetailContentSection({ post }: NewsDetailContentSect
 
       {/* 中部: 画像が横幅いっぱい */}
       <section className="w-full px-4 max-w-[1500px] mx-auto">
-        <img
-          src={getNewsImage(post.thumbnail)}
-          alt={post.title}
-          className="w-full h-48 md:h-96 lg:h-[700px] object-cover"
-        />
+        <div className="relative w-full h-48 md:h-96 lg:h-[700px]">
+          <Image
+            src={getNewsImage(post.thumbnail)}
+            alt={post.title}
+            fill
+            sizes="(max-width: 1500px) 100vw, 1500px"
+            className="object-cover"
+            loading="lazy"
+            quality={80}
+          />
+        </div>
       </section>
 
       {/* 下部: コンテンツ部分 */}
