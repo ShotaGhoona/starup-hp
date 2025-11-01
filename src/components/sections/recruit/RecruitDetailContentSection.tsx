@@ -1,45 +1,21 @@
 'use client'
 
-import { RecruitPost } from '@/lib/mdx'
-import { RecruitListItem } from '@/lib/recruit'
+import { RecruitPost, RecruitListItem } from '@/types/recruit'
 import RecruitItem from '@/components/ui/RecruitItem'
 import TransitionLink from '@/components/ui/TransitionLink'
+import MarkdownContent from '@/components/ui/MarkdownContent'
+import Image from 'next/image'
 
 interface RecruitDetailContentSectionProps {
   post: RecruitPost
   allRecruits: RecruitListItem[]
 }
 
-// カテゴリとジョブタイプに応じた画像を返す関数
-function getRecruitImage(category: string, jobType?: string): string {
-  // jobTypeベースで画像を判定
-  const jobTypeImageMap: { [key: string]: string } = {
-    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
-    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
-    'プロジェクトマネージャー': '/images/recruit/rectuit-detail/business.jpg',
-    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
-  }
-
-  // categoryベースで画像を判定（フォールバック）
-  const categoryImageMap: { [key: string]: string } = {
-    'エンジニア': '/images/recruit/rectuit-detail/engineer.jpg',
-    'マネジメント': '/images/recruit/rectuit-detail/management.jpg',
-    'ビジネス': '/images/recruit/rectuit-detail/business.jpg',
-    'セールス': '/images/recruit/rectuit-detail/sales.jpg',
-  }
-
-  // jobTypeがある場合は優先
-  if (jobType && jobTypeImageMap[jobType]) {
-    return jobTypeImageMap[jobType]
-  }
-
-  return categoryImageMap[category] || '/images/recruit/rectuit-detail/business.jpg'
-}
 
 export default function RecruitDetailContentSection({ post, allRecruits }: RecruitDetailContentSectionProps) {
   // 関連求人を取得（同じjobTypeで、現在の求人を除く、最大4件）
   const relatedRecruits = allRecruits
-    .filter(recruit => recruit.jobType === post.jobType && recruit.id !== post.slug)
+    .filter(recruit => recruit.jobType === post.jobType && recruit.id !== post.id)
     .slice(0, 4)
 
   return (
@@ -64,7 +40,6 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
               <div className="text-sm text-gray-500">
                 {new Date(post.date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' }).replace(/年|月/g, '').toUpperCase()}
               </div>
-              <div className="text-xs text-gray-400">5 MIN</div>
             </div>
 
             {/* Summary */}
@@ -98,7 +73,6 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
                 <div className="text-sm text-gray-500 mb-2">{new Date(post.date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' }).replace(/年|月/g, '').toUpperCase()}</div>
                 <div className="text-xs text-gray-400 mb-1">{new Date(post.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }).toUpperCase()}</div>
                 <div className="text-xs text-gray-400 mb-4">{new Date(post.date).getFullYear()}</div>
-                <div className="text-xs text-gray-400">5 MIN</div>
               </div>
             </div>
           </div>
@@ -107,11 +81,17 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
 
       {/* 中部: 画像が横幅いっぱい */}
       <section className="w-full px-4 max-w-[1500px] mx-auto">
-        <img
-          src={getRecruitImage(post.category, post.jobType)}
-          alt={post.title}
-          className="w-full h-48 md:h-96 lg:h-[700px] object-cover"
-        />
+        <div className="relative w-full h-48 md:h-96 lg:h-[700px]">
+          <Image
+            src={post.thumbnail}
+            alt={post.title}
+            fill
+            sizes="(max-width: 1500px) 100vw, 1500px"
+            className="object-cover"
+            loading="lazy"
+            quality={80}
+          />
+        </div>
       </section>
 
       {/* 下部: コンテンツ部分 */}
@@ -120,21 +100,7 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
           {/* Mobile Layout */}
           <div className="block lg:hidden">
             <div className="max-w-none prose prose-gray">
-              <div
-                className="leading-relaxed"
-                dangerouslySetInnerHTML={{
-                  __html: post.content
-                    .replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold text-gray-900 mt-6 mb-4">$1</h1>')
-                    .replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold text-gray-800 mt-6 mb-3">$1</h2>')
-                    .replace(/^### (.+)$/gm, '<h3 class="text-lg font-medium text-gray-800 mt-4 mb-2">$1</h3>')
-                    .replace(/^\*\*(.+)\*\*$/gm, '<p class="font-semibold text-gray-900 mb-3">$1</p>')
-                    .replace(/^- (.+)$/gm, '<li class="ml-4 mb-2">$1</li>')
-                    .replace(/^(\d+)\. (.+)$/gm, '<li class="ml-4 mb-2 list-decimal">$2</li>')
-                    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 leading-relaxed text-sm">')
-                    .replace(/^(.+)$/gm, '<p class="mb-4 text-gray-600 leading-relaxed text-sm">$1</p>')
-                    .replace(/---/g, '<hr class="my-6 border-gray-300" />')
-                }}
-              />
+              <MarkdownContent content={post.content} variant="mobile" />
             </div>
 
             {/* Mobile Apply Section */}
@@ -155,21 +121,7 @@ export default function RecruitDetailContentSection({ post, allRecruits }: Recru
             <div className="col-span-2"></div>
             <div className="col-span-8 border-r border-gray-700 pr-8">
               <div className="max-w-none prose prose-lg prose-gray">
-                <div
-                  className="leading-relaxed"
-                  dangerouslySetInnerHTML={{
-                    __html: post.content
-                      .replace(/^# (.+)$/gm, '<h1 class="text-3xl font-bold text-gray-900 mt-8 mb-6">$1</h1>')
-                      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">$1</h2>')
-                      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-medium text-gray-800 mt-6 mb-3">$1</h3>')
-                      .replace(/^\*\*(.+)\*\*$/gm, '<p class="font-semibold text-gray-900 mb-4">$1</p>')
-                      .replace(/^- (.+)$/gm, '<li class="ml-4 mb-2">$1</li>')
-                      .replace(/^(\d+)\. (.+)$/gm, '<li class="ml-4 mb-2 list-decimal">$2</li>')
-                      .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 leading-relaxed">')
-                      .replace(/^(.+)$/gm, '<p class="mb-4 text-gray-600 leading-relaxed">$1</p>')
-                      .replace(/---/g, '<hr class="my-8 border-gray-300" />')
-                  }}
-                />
+                <MarkdownContent content={post.content} variant="desktop" />
               </div>
             </div>
 

@@ -1,7 +1,8 @@
 'use client'
 
-import { RecruitListItem } from '@/lib/recruit'
+import { RecruitListItem } from '@/types/recruit'
 import TransitionLink from '@/components/ui/TransitionLink'
+import Image from 'next/image'
 
 interface RecruitItemProps {
   item: RecruitListItem
@@ -27,11 +28,15 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
           )}
 
           {/* Image */}
-          <div className="w-full">
-            <img
+          <div className="w-full relative h-48">
+            <Image
               src={item.imageUrl}
               alt={item.title}
-              className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              fill
+              sizes="100vw"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              loading="lazy"
+              quality={75}
             />
           </div>
 
@@ -61,11 +66,15 @@ export default function RecruitItem({ item, showDivider = false }: RecruitItemPr
       {/* Desktop Layout */}
       <TransitionLink href={`/recruit/${item.id}`} className="hidden md:block group cursor-pointer">
         <div className="grid grid-cols-6 gap-6 items-start py-8">
-          <div className="col-span-2">
-            <img
+          <div className="col-span-2 relative aspect-[4/3]">
+            <Image
               src={item.imageUrl}
               alt={item.title}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              loading="lazy"
+              quality={75}
             />
           </div>
 
